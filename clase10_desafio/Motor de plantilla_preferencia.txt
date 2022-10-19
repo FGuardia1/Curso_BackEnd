@@ -1,0 +1,2 @@
+El motor de plantilla que me resulto mas comodo fue handlebars, por que el lenguaje y la sintaxis es muy parecida al html tradicional
+y el motor la sintaxis de vs code lo reconoce mejor que ejs

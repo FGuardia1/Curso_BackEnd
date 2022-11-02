@@ -10,11 +10,23 @@ routerProduct.get("/:id?", async (req, res) => {
 });
 
 routerProduct.post("/", validAdmin, async (req, res) => {
-  let { title, price, thumbnail } = req.body;
+  let { nombre, descripcion, foto, precio, stock } = req.body;
   let id = await getIdCodigo();
-  price = Number(price);
+  precio = Number(precio);
   id = Number(id);
-  products.create({ title, price, thumbnail, id });
+  let codigo = id;
+  let timestamp = new Date().toLocaleString();
+  products.create({
+    nombre,
+    descripcion,
+    codigo,
+    foto,
+    precio,
+    stock,
+    id,
+    codigo,
+    timestamp,
+  });
   res.status(200).send("Producto agregado");
 });
 

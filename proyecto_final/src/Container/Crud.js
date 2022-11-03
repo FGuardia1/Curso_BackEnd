@@ -1,7 +1,7 @@
 import fs from "fs";
 export default class CRUD {
   constructor(fileName) {
-    this.fileName = `./db/${fileName}`;
+    this.fileName = `./src/db/${fileName}`;
   }
   //Genera ID
 

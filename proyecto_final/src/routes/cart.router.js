@@ -6,7 +6,6 @@ const products = new Crud("productos.txt");
 
 routerCart.get("/:id/productos", async (req, res) => {
   let cart = await carritos.getById(req.params.id);
-
   res.send(cart.productos);
 });
 

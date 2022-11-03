@@ -1,7 +1,7 @@
-const express = require("express");
-const validAdmin = require("../middlewars/index");
+import express from "express";
+import { validAdmin } from "../middlewars/index.js";
 const routerProduct = express.Router();
-const Crud = require("../Crud");
+import Crud from "../Container/Crud.js";
 const products = new Crud("productos.txt");
 
 routerProduct.get("/:id?", async (req, res) => {
@@ -10,11 +10,10 @@ routerProduct.get("/:id?", async (req, res) => {
 });
 
 routerProduct.post("/", validAdmin, async (req, res) => {
-  let { nombre, descripcion, foto, precio, stock } = req.body;
+  let { nombre, descripcion, foto, precio, stock, codigo } = req.body;
   let id = await getIdCodigo();
   precio = Number(precio);
   id = Number(id);
-  let codigo = id;
   let timestamp = new Date().toLocaleString();
   products.create({
     nombre,
@@ -55,4 +54,4 @@ async function getIdCodigo() {
   }
 }
 
-module.exports = routerProduct;
+export default routerProduct;

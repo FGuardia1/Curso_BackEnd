@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const routerCart = express.Router();
-const Crud = require("../Crud");
+import Crud from "../Container/Crud.js";
 const carritos = new Crud("carrito.txt");
 const products = new Crud("productos.txt");
 
@@ -18,6 +18,7 @@ routerCart.delete("/:id", (req, res) => {
 
 routerCart.post("/", async (req, res) => {
   let id = await getIdCodigo();
+
   let timestamp = new Date().toLocaleString();
   let productos = [];
   id = Number(id);
@@ -36,9 +37,9 @@ async function getIdCodigo() {
   }
 }
 
-routerCart.post("/:id/productos/:id_prod", async (req, res) => {
+routerCart.post("/:id/productos", async (req, res) => {
   const idCart = req.params.id;
-  const idProd = req.params.id_prod;
+  const { idProd } = req.body;
   let carrito = await carritos.getById(idCart);
   let producto = await products.getById(idProd);
   carrito.productos.push(producto);
@@ -55,4 +56,4 @@ routerCart.delete("/:id/productos/:id_prod", async (req, res) => {
   res.status(200).send("Producto eliminado de carrito");
 });
 
-module.exports = routerCart;
+export default routerCart;

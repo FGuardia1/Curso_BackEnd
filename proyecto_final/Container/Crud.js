@@ -1,7 +1,7 @@
-const fs = require("fs");
-class CRUD {
+import fs from "fs";
+export default class CRUD {
   constructor(fileName) {
-    this.fileName = __dirname + "/" + fileName;
+    this.fileName = `./db/${fileName}`;
   }
   //Genera ID
 
@@ -75,5 +75,3 @@ class CRUD {
     fs.writeFileSync(this.fileName, JSON.stringify(objects, null, 2));
   }
 }
-
-module.exports = CRUD;

@@ -11,9 +11,7 @@ routerProduct.get("/:id?", async (req, res) => {
 
 routerProduct.post("/", validAdmin, async (req, res) => {
   let { nombre, descripcion, foto, precio, stock, codigo } = req.body;
-  let id = await getIdCodigo();
   precio = Number(precio);
-  id = Number(id);
   let timestamp = new Date().toLocaleString();
   products.create({
     nombre,
@@ -22,7 +20,6 @@ routerProduct.post("/", validAdmin, async (req, res) => {
     foto,
     precio,
     stock,
-    id,
     codigo,
     timestamp,
   });
@@ -41,17 +38,5 @@ routerProduct.delete("/:id", validAdmin, (req, res) => {
   products.delete(id);
   res.status(200).send("Producto eliminado");
 });
-
-async function getIdCodigo() {
-  let prods = await products.getAll();
-
-  if (prods.length) {
-    let id = prods[prods.length - 1].id + 1;
-
-    return id;
-  } else {
-    return 1;
-  }
-}
 
 export default routerProduct;

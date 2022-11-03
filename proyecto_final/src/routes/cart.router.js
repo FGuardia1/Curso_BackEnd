@@ -16,25 +16,11 @@ routerCart.delete("/:id", (req, res) => {
 });
 
 routerCart.post("/", async (req, res) => {
-  let id = await getIdCodigo();
-
   let timestamp = new Date().toLocaleString();
   let productos = [];
-  id = Number(id);
-  carritos.create({ id, timestamp, productos });
-  res.send({ id });
+  let newCart = await carritos.create({ timestamp, productos });
+  res.send({ id: newCart.id });
 });
-
-async function getIdCodigo() {
-  let carts = await carritos.getAll();
-
-  if (carts.length) {
-    let id = carts[carts.length - 1].id + 1;
-    return id;
-  } else {
-    return 1;
-  }
-}
 
 routerCart.post("/:id/productos", async (req, res) => {
   const idCart = req.params.id;

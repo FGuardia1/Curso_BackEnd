@@ -9,6 +9,7 @@ export default class CRUD {
   async create(obj) {
     try {
       const readFile = await this.getAll();
+      obj["id"] = Number(await this.getId());
       readFile.push(obj);
       this.writeData(readFile);
       return obj;
@@ -17,6 +18,17 @@ export default class CRUD {
       throw new Error(err);
     }
   }
+
+  async getId() {
+    let readFile = await this.getAll();
+    if (readFile.length) {
+      let id = readFile[readFile.length - 1].id + 1;
+      return id;
+    } else {
+      return 1;
+    }
+  }
+
   //Devuelve el objeto con el ID buscado
   async getById(id) {
     try {

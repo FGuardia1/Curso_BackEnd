@@ -11,7 +11,7 @@ const carritosSchema = new mongoose.Schema({
       precio: Number,
       stock: Number,
       foto: String,
-      _id: mongoose.SchemaTypes.ObjectId,
+      _id: String,
     },
   ],
 });

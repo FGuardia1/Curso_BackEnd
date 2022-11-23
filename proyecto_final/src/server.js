@@ -1,7 +1,14 @@
-import express from "express";
-import routerProduct from "./routes/products.router.js";
-import routerCart from "./routes/cart.router.js";
-const app = express();
+//import express from "express";
+//import routerProduct from "./routes/products.router.js";
+//import routerCart from "./routes/cart.router.js";
+
+//import ProductosDaoFirebase from "./daos/productos/ProductosDaoFirebase.js";
+import CarritosDaoMongoDB from "./daos/carritos/CarritosDaoMongoDB.js";
+
+let ej = new CarritosDaoMongoDB();
+ej.findAll();
+
+/*const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
@@ -21,3 +28,4 @@ const server = app.listen(PORT, () =>
   console.log(`Servidor corriendo en puerto: ${PORT}`)
 );
 server.on("error", (err) => console.log(err));
+*/

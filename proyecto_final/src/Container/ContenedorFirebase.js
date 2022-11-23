@@ -4,7 +4,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 let db;
-async () => {};
 
 export default class ContenedorFirebase {
   constructor(coleccion) {
@@ -25,6 +24,7 @@ export default class ContenedorFirebase {
       const document = this.collections.doc();
       // nos brinda un documento temporal con un id autogenerado
       await document.create(data);
+      return document.id;
       // ese documento le agrega datos y lo guarda
       console.log("creado !");
     } catch (e) {
@@ -32,18 +32,15 @@ export default class ContenedorFirebase {
     }
   }
 
-  async findOne(id) {
+  async getById(id) {
     try {
       const document = await this.collections.doc(id).get();
-      // document me va a responder const con funcionalida
-      // y la funcion data es un getter a los datos que
-      // tiene almacenado
       return document.data();
     } catch (e) {
       console.error("Error al buscar un docuemento: ", e);
     }
   }
-  async findAll() {
+  async getAll() {
     try {
       const document = await this.collections.get();
       return document.docs.map((doc) => {
@@ -54,7 +51,7 @@ export default class ContenedorFirebase {
     }
   }
 
-  async update(id, data) {
+  async modify(id, data) {
     try {
       const document = this.collections.doc(id);
       await document.update(data);
@@ -64,13 +61,13 @@ export default class ContenedorFirebase {
     }
   }
 
-  async remove(id) {
+  async delete(id) {
     try {
       const document = this.collections.doc(id);
       await document.delete();
       console.log("eliminado !");
     } catch (e) {
-      console.error("Error al eliminar un docuemento: ", e);
+      console.error("Error al eliminar un documento: ", e);
     }
   }
 }

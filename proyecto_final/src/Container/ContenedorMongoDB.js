@@ -14,9 +14,23 @@ export default class ContenedorMongoDB {
     console.log("conectado");
   }
 
-  async findAll() {
-    let prod = await this.collection.find();
+  async create(data) {
+    let newElem = await this.collection.create(data);
+    return newElem._id;
+  }
 
-    console.log(prod[0]);
+  async getById(id) {
+    return await this.collection.find({ _id: id });
+  }
+  async getAll() {
+    return await this.collection.find();
+  }
+
+  async modify(id, data) {
+    await this.collection.update({ _id: id }, { $set: data });
+  }
+
+  async delete(id) {
+    await this.collection.deleteOne({ _id: id });
   }
 }

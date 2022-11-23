@@ -27,7 +27,6 @@ routerCart.post("/:id/productos", async (req, res) => {
   const { idProd } = req.body;
   let carrito = await carritoDAO.getById(idCart);
   let producto = await productosDAO.getById(idProd);
-
   carrito.productos.push(producto);
   carritoDAO.modify(idCart, carrito);
   res.status(200).send("Producto agregado a carrito");

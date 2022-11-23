@@ -35,7 +35,7 @@ export default class ContenedorFirebase {
   async getById(id) {
     try {
       const document = await this.collections.doc(id).get();
-      return document.data();
+      return { ...document.data(), id: document.id };
     } catch (e) {
       console.error("Error al buscar un docuemento: ", e);
     }

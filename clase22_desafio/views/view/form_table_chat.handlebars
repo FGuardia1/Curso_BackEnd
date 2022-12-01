@@ -1,16 +1,3 @@
-<form onsubmit="return addProduct(this)">
-  <input type="text" name="title" id="title" placeholder="title" required />
-  <input type="number" name="price" id="price" placeholder="price" required />
-  <input
-    type="text"
-    name="thumbnail"
-    id="thumbnail"
-    placeholder="thumbnail"
-    required
-  />
-  <input type="submit" value="Agregar" />
-</form>
-
 <div>
   <table class="table table-dark table-striped">
     <thead>
@@ -37,9 +24,19 @@
 </div>
 
 <h1>Centro de mensajes</h1>
-<form onsubmit="return addMessage(this)">
+<h2 id="compresionChat"></h2>
+<form
+  onsubmit="return addMessage(this)"
+  class="d-flex flex-column align-items-start"
+>
   <input type="text" id="userEmail" placeholder="Email..." required />
+  <input type="text" id="userNombre" placeholder="Nombre..." />
+  <input type="text" id="userApellido" placeholder="Apellido..." />
+  <input type="text" id="userEdad" placeholder="Edad..." />
+  <input type="text" id="userAlias" placeholder="Alias..." />
+  <input type="text" id="userAvatar" placeholder="Avatar..." />
   <input type="text" id="text" placeholder="Cuéntamos algo..." />
+
   <input type="submit" value="Enviar" />
 </form>
 

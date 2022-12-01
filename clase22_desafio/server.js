@@ -3,13 +3,11 @@ const { create } = require("express-handlebars");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 
-const { options_mariaDB, options_sqlite3 } = require("./connection/index");
+const { productDAO, chatDAO } = require("./daos");
 
-const Contenedor = require("./containers/ContainerMemory");
-const ChatHistory = require("./containers/ContainerFilesystem");
-const contenedor = new Contenedor(options_mariaDB, "productos");
-const chatHistory = new ChatHistory(options_sqlite3, "messages");
-
+const util = require("util");
+const routerProductos = require("./routes/productos.js");
+const { normalizar, chatSchema } = require("./utils/normalizar.utils");
 const app = express();
 const PORT = 3000;
 app.use(express.static("public"));
@@ -32,22 +30,28 @@ app.set("views", "./views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const routerProductos = require("./routes/productos.js");
-
 app.use("/", routerProductos);
 
 io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
-  socket.emit("list-product", await contenedor.getAll());
-  socket.emit("messages", await chatHistory.getAll());
+
+  let chat = {
+    id: "mensajes",
+    mensajes: await chatDAO.getAll(),
+  };
+  const chat_normalizado = normalizar(chat, chatSchema);
+
+  socket.emit("list-product", productDAO.getAll());
+  socket.emit("messages", chat_normalizado);
 
   socket.on("new-message", (data) => {
-    chatHistory.save(data);
+    chatDAO.create(data);
+
     io.sockets.emit("messages-push", data);
   });
 
   socket.on("new-product", (data) => {
-    contenedor.save(data);
+    contenedorProd.save(data);
     io.sockets.emit("product-push", data);
   });
 });

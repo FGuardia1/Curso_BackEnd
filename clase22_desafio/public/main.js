@@ -1,17 +1,27 @@
 const socket = io.connect();
 
+const desnormalizar = normalizr.denormalize;
+
+const authorSchema = new normalizr.schema.Entity("author");
+
+const mensajeSchema = new normalizr.schema.Entity("mensaje", {
+  author: authorSchema,
+});
+const chatSchema = new normalizr.schema.Entity("chat", {
+  mensajes: [mensajeSchema],
+});
+
 const renderProduct = (data) => {
-  console.log("chat" + data);
   const html = data
     .map((elem, index) => {
       return `
 	    <tr>
           <td>${elem.title}</td>
           <td>${elem.price}</td>
-          <td><img
+          <td class="w-25 p-3"><img
               src="${elem.thumbnail}"
               alt="..."
-              class="img-responsive img-thumbnail"
+              class="img-fluid"
             /></td>
         </tr>`;
     })
@@ -22,10 +32,10 @@ const renderProduct = (data) => {
 const renderMessages = (data) => {
   const html = data
     .map((elem, index) => {
-      return `<div>
-				<strong class="text-primary">${elem.author}</strong><span style="color:brown">[${elem.date}]</span>:
-				<i style="color:green">${elem.text}</i>
-			</div>`;
+      return `<div >
+				<strong class="text-primary">${elem.author.id}</strong><span style="color:brown">[${elem.date}]</span>:
+				<i style="color:green">${elem.text}</i>  
+    <img width="20" height="20" src=${elem.author.avatar} />`;
     })
     .join(" ");
   document.querySelector("#messages").innerHTML = html;
@@ -35,10 +45,11 @@ const renderProductAdd = (data) => {
   const html = `
 	<td>${data.title}</td>
 	<td>${data.price}</td>
-	<td><img
+	<td alt="Max-width 50%"><img
 		src="${data.thumbnail}"
 		alt="..."
-		class="img-responsive img-thumbnail"
+		class="img-fluid "
+    
 	  /></td>`;
   const tr = document.createElement("tr");
   tr.innerHTML = html;
@@ -47,9 +58,9 @@ const renderProductAdd = (data) => {
 
 const renderMessageAdd = (data) => {
   const html = `
-  <strong class="text-primary">${data.author}</strong><span style="color:brown">[${data.date}]</span>:
+  <strong class="text-primary">${data.author.id}</strong><span style="color:brown">[${data.date}]</span>:
   <i style="color:green">${data.text}</i>
-	`;
+	<img width="20" height="20" src=${data.author.avatar} />`;
   const div = document.createElement("div");
   div.innerHTML = html;
   document.querySelector("#messages").append(div);
@@ -67,12 +78,28 @@ const addProduct = (e) => {
 
 const addMessage = (e) => {
   const message = {
-    author: document.querySelector("#userEmail").value,
+    author: {
+      id: document.querySelector("#userEmail").value,
+      nombre: document.querySelector("#userNombre").value,
+      apellido: document.querySelector("#userApellido").value,
+      edad: document.querySelector("#userEdad").value,
+      alias: document.querySelector("#userAlias").value,
+      avatar: document.querySelector("#userAvatar").value,
+    },
     text: document.querySelector("#text").value,
     date: new Date().toLocaleString(),
   };
   socket.emit("new-message", message);
   return false;
+};
+
+const setCompresion = (lenghtNorm, lenghtOrig) => {
+  let porc = (lenghtNorm / lenghtOrig) * 100;
+  porc = (100 - porc).toFixed(2);
+
+  document.querySelector(
+    "#compresionChat"
+  ).innerHTML = `La compresion es de ${porc}%`;
 };
 
 socket.on("list-product", (data) => {
@@ -84,7 +111,16 @@ socket.on("product-push", (data) => {
 });
 
 socket.on("messages", (data) => {
-  renderMessages(data);
+  const data_denormalizada = desnormalizar(
+    data.result,
+    chatSchema,
+    data.entities
+  );
+  setCompresion(
+    JSON.stringify(data).length,
+    JSON.stringify(data_denormalizada).length
+  );
+  renderMessages(data_denormalizada.mensajes);
 });
 
 socket.on("messages-push", (data) => {

@@ -32,8 +32,9 @@ const renderProduct = (data) => {
 const renderMessages = (data) => {
   const html = data
     .map((elem, index) => {
+      let date = new Date(elem.date).toLocaleString();
       return `<div >
-				<strong class="text-primary">${elem.author.id}</strong><span style="color:brown">[${elem.date}]</span>:
+				<strong class="text-primary">${elem.author.id}</strong><span style="color:brown">[${date}]</span>:
 				<i style="color:green">${elem.text}</i>  
     <img width="20" height="20" src=${elem.author.avatar} />`;
     })
@@ -49,7 +50,6 @@ const renderProductAdd = (data) => {
 		src="${data.thumbnail}"
 		alt="..."
 		class="img-fluid "
-    
 	  /></td>`;
   const tr = document.createElement("tr");
   tr.innerHTML = html;
@@ -57,8 +57,9 @@ const renderProductAdd = (data) => {
 };
 
 const renderMessageAdd = (data) => {
+  let date = new Date(data.date).toLocaleString();
   const html = `
-  <strong class="text-primary">${data.author.id}</strong><span style="color:brown">[${data.date}]</span>:
+  <strong class="text-primary">${data.author.id}</strong><span style="color:brown">[${date}]</span>:
   <i style="color:green">${data.text}</i>
 	<img width="20" height="20" src=${data.author.avatar} />`;
   const div = document.createElement("div");
@@ -87,7 +88,7 @@ const addMessage = (e) => {
       avatar: document.querySelector("#userAvatar").value,
     },
     text: document.querySelector("#text").value,
-    date: new Date().toLocaleString(),
+    date: new Date(),
   };
   socket.emit("new-message", message);
   return false;

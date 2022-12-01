@@ -46,7 +46,7 @@ class ContenedorFirebase {
       let myDoc = document.docs.map((doc) => {
         return { ...doc.data(), id: doc.id };
       });
-      return myDoc.sort((a, b) => a.date.localeCompare(b.date));
+      return myDoc.sort((a, b) => new Date(a.date) - new Date(b.date));
     } catch (e) {
       console.error("Error al crear un docuemento: ", e);
     }

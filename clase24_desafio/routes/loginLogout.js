@@ -3,7 +3,12 @@ const { Router } = express;
 const router = Router();
 
 router.get("/", (req, res, next) => {
-  res.render("view/login");
+  res.send("holaaa");
+  /*res.render("view/login");*/
+});
+
+router.get("/registro", (req, res) => {
+  res.send("holaaa");
 });
 
 router.get("/logout", (req, res) => {

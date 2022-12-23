@@ -1,12 +1,14 @@
 require("dotenv").config();
 const env = process.env;
+const parseArgs = require("minimist");
+const options = {
+  default: { puerto: 8080 },
+};
+const argumentos = parseArgs(process.argv.slice(2), options);
 const MONGO_LOCAL_URI = env.MONGO_LOCAL_URI;
-const FIREBASE_CONFIG = env.FIREBASE_CONFIG;
 const MONGO_ATLAS_URL = env.MONGO_ATLAS_URL;
-const prueba = env.PRUEBA;
-console.log("mongo local", MONGO_LOCAL_URI);
-console.log("mongo atlas", MONGO_ATLAS_URL);
-const PORT = 3000;
+
+const PORT = argumentos.puerto;
 const express = require("express");
 const { create } = require("express-handlebars");
 const { Server: HttpServer } = require("http");
@@ -17,6 +19,8 @@ const credential = require("./utils/credentials.js");
 const util = require("util");
 const routerProductos = require("./routes/productos.js");
 const routerLogInOut = require("./routes/loginLogout.js");
+const routerInfo = require("./routes/info.js");
+const routerRandom = require("./routes/random.js");
 const { normalizar, chatSchema } = require("./utils/normalizar.utils");
 const app = express();
 
@@ -85,6 +89,9 @@ passport.deserializeUser((id, done) => {
 });
 app.use("/", routerProductos);
 app.use("/", routerLogInOut);
+app.use("/", routerInfo);
+app.use("/api", routerRandom);
+
 io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
 

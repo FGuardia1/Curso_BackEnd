@@ -1,5 +1,4 @@
 const credential = {
-  db_mongo_local_Uri: "mongodb://localhost:27017/usuarios",
   db_firebase: {
     type: "service_account",
     project_id: "ecommercebackend-4361c",
@@ -15,8 +14,6 @@ const credential = {
     client_x509_cert_url:
       "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jgv5y%40ecommercebackend-4361c.iam.gserviceaccount.com",
   },
-  db_atlas_Url:
-    "mongodb+srv://fer:contra123@cluster0.emeikir.mongodb.net/?retryWrites=true&w=majority",
 };
 
 module.exports = credential;

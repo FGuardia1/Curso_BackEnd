@@ -1,3 +1,5 @@
+require("dotenv").config();
+const env = process.env;
 const admin = require("firebase-admin");
 const credential = require("../utils/credentials.js");
 

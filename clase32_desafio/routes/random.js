@@ -4,9 +4,12 @@ const router = Router();
 const getCollectionRandom = require("../utils/randoms.utils.js");
 const { fork } = require("child_process");
 
+const logger = require("../utils/logger.js");
 router.get("/randoms", (req, res, next) => {
+  logger.info(
+    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
+  );
   let cant = 100000000;
-
   if (req.query.cant) {
     cant = req.query.cant;
   }

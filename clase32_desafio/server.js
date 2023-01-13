@@ -1,3 +1,5 @@
+const logger = require("./utils/logger.js");
+
 require("dotenv").config();
 const env = process.env;
 const parseArgs = require("minimist");
@@ -15,37 +17,36 @@ const { create } = require("express-handlebars");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 
-/* const { productDAO, chatDAO } = require("./daos");
+const { productDAO, chatDAO } = require("./daos");
 const credential = require("./utils/credentials.js");
 const util = require("util");
 const routerProductos = require("./routes/productos.js");
 const routerLogInOut = require("./routes/loginLogout.js");
 const routerInfo = require("./routes/info.js");
 const routerRandom = require("./routes/random.js");
-const { normalizar, chatSchema } = require("./utils/normalizar.utils"); */
+const { normalizar, chatSchema } = require("./utils/normalizar.utils");
 const app = express();
 
-/* const session = require("express-session");
+const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 const User = require("./models/user.js");
 const mongoose = require("mongoose");
- */
+
 app.use(express.static("public"));
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
-/* const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const passport = require("passport");
 const Strategy = require("passport-local");
 const { login, register } = require("./passport/strategy.js");
- */
-const cluster = require("cluster");
 
+const cluster = require("cluster");
 const numCpu = require("os").cpus().length;
 
-/* passport.use("register", new Strategy({ passReqToCallback: true }, register));
+passport.use("register", new Strategy({ passReqToCallback: true }, register));
 passport.use("login", new Strategy({ passReqToCallback: true }, login));
 
 const hbs = create({
@@ -93,50 +94,78 @@ passport.deserializeUser((id, done) => {
     done(err, user);
   });
 });
+
 app.use("/", routerProductos);
 app.use("/", routerLogInOut);
 app.use("/", routerInfo);
-app.use("/api", routerRandom); */
+app.use("/api", routerRandom);
 
-/* io.on("connection", async (socket) => {
+io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
+  try {
+    let chat = {
+      id: "mensajes",
+      mensajes: await chatDAO.getAll(),
+    };
+    const chat_normalizado = normalizar(chat, chatSchema);
 
-  let chat = {
-    id: "mensajes",
-    mensajes: await chatDAO.getAll(),
-  };
-  const chat_normalizado = normalizar(chat, chatSchema);
-
-  socket.emit("list-product", productDAO.getAll());
-  socket.emit("messages", chat_normalizado);
+    socket.emit("list-product", productDAO.getAll());
+    socket.emit("messages", chat_normalizado);
+  } catch (error) {
+    logger.error(error);
+  }
 
   socket.on("new-message", (data) => {
-    chatDAO.create(data);
+    try {
+      chatDAO.create(data);
+    } catch (error) {
+      logger.error(error);
+    }
 
     io.sockets.emit("messages-push", data);
   });
 
   socket.on("new-product", (data) => {
-    contenedorProd.save(data);
+    try {
+      contenedorProd.save(data);
+    } catch (error) {
+      logger.error(error);
+    }
+
     io.sockets.emit("product-push", data);
   });
-}); */
+});
 
-if (cluster.isMaster) {
-  for (let index = 0; index < numCpu; index++) {
-    cluster.fork();
+if (MODO == "cluster") {
+  if (cluster.isMaster) {
+    for (let index = 0; index < numCpu; index++) {
+      cluster.fork();
+    }
+  } else {
+    httpServer.listen(PORT, async () => {
+      console.log(`Server running on PORT ${PORT}, en modo ${MODO}`);
+      try {
+        await mongoose.connect(MONGO_LOCAL_URI, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+        console.log("DB mongo conectada");
+      } catch (error) {
+        console.log(`Error en conexión de Base de datos: ${error}`);
+      }
+    });
   }
 } else {
+  httpServer.listen(PORT, async () => {
+    console.log(`Server running on PORT ${PORT}, en modo ${MODO}`);
+    try {
+      await mongoose.connect(MONGO_LOCAL_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      console.log("DB mongo conectada");
+    } catch (error) {
+      console.log(`Error en conexión de Base de datos: ${error}`);
+    }
+  });
 }
-httpServer.listen(PORT, async () => {
-  console.log(`Server running on PORT ${PORT}`);
-  /* try {
-    await mongoose.connect(MONGO_LOCAL_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("DB mongo conectada");
-  } catch (error) {
-    console.log(`Error en conexión de Base de datos: ${error}`);
-  } */
-});

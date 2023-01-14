@@ -6,6 +6,17 @@ const Authenticated = require("../middlewars/middlewars.js");
 const compression = require("compression");
 const logger = require("../utils/logger.js");
 router.get("/info", compression(), (req, res, next) => {
+  /*   console.log({
+    argumentos: process.argv,
+    nombrePlataforma: process.platform,
+    versionNode: process.version,
+    memoria: process.resourceUsage().maxRSS,
+    pathEjec: process.execPath,
+    IdProceso: process.pid,
+    carpetaProy: process.cwd(),
+    cantProc: numCpu,
+  }); */
+
   res.render("view/info", {
     argumentos: process.argv,
     nombrePlataforma: process.platform,

@@ -13,11 +13,13 @@ router.get("/randoms", (req, res, next) => {
   if (req.query.cant) {
     cant = req.query.cant;
   }
-  const subProcess = fork("./factory/child.js");
+
+  res.send(getCollectionRandom(cant));
+  /*   const subProcess = fork("./factory/child.js");
   subProcess.send(cant);
   subProcess.on("message", (msg) => {
     res.send(msg);
-  });
+  }); */
 });
 
 module.exports = router;

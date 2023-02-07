@@ -2,6 +2,7 @@ import mongoose, { Mongoose } from "mongoose";
 const carritosCollection = "carritos";
 const carritosSchema = new mongoose.Schema({
   timestamp: { type: String },
+  userId: String,
   productos: [
     {
       nombre: String,

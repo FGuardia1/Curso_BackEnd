@@ -4,7 +4,7 @@ import ProductosDaoMongoDB from "../daos/productos/ProductosDaoMongoDB.js";
 import CarritosDaoFirebase from "./carritos/CarritosDaoFirebase.js";
 import CarritosDaoMongoDB from "./carritos/CarritosDaoMongoDB.js";
 
-let carritoDAO = new CarritosDaoFirebase();
-let productosDAO = new ProductosDaoFirebase();
+let carritoDAO = new CarritosDaoMongoDB();
+let productosDAO = new ProductosDaoMongoDB();
 
 export { productosDAO, carritoDAO };

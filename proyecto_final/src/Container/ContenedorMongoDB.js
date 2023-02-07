@@ -22,8 +22,12 @@ export default class ContenedorMongoDB {
   async getById(id) {
     return await this.collection.findOne({ _id: id });
   }
+
+  async getBySearch(filter) {
+    return await this.collection.findOne(filter);
+  }
   async getAll() {
-    return await this.collection.find();
+    return await this.collection.find().lean();
   }
 
   async modify(id, data) {

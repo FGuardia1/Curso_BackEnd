@@ -3,6 +3,7 @@ import routerProduct from "./routes/products.router.js";
 import routerCart from "./routes/cart.router.js";
 import routerLogin from "./routes/loginLogout.router.js";
 import routerHome from "./routes/home.router.js";
+import routerPedido from "./routes/pedido.router.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -12,15 +13,14 @@ import { Strategy as LocalStrategy } from "passport-local";
 import * as strategy from "./passport/strategy.js";
 import path from "path";
 import { User } from "../utils/models/user.js";
+
 const app = express();
 const PORT = process.env.PORT || 8080;
-
+const dirname = `${process.cwd()}`;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static("/public"));
-
-const dirname = `${process.cwd()}`;
+app.use(express.static(path.join(dirname, "public")));
 
 app.use(express.static(path.join(dirname, "../", "public")));
 import exphbs from "express-handlebars";
@@ -81,6 +81,7 @@ passport.deserializeUser((id, done) => {
 app.use("/api/productos", routerProduct);
 app.use("/api/carrito", routerCart);
 app.use("/login", routerLogin);
+app.use("/api/pedido", routerPedido);
 app.use("/", routerHome);
 
 app.get("/js/main.js", function (req, res) {

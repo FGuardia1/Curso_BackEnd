@@ -1,6 +1,21 @@
 import express from "express";
 const routerLogInOut = express.Router();
 import passport from "passport";
+import multer from "multer";
+
+import { enviarMailRegistro } from "../services/sendEmail.js";
+
+const myStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/avatars");
+  },
+  filename: (req, file, cb) => {
+    const filename = `${Date.now()}_${file.originalname}`;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage: myStorage });
 
 routerLogInOut.get("/", (req, res, next) => {
   res.render("login");
@@ -18,10 +33,9 @@ routerLogInOut.get("/faillogin", (req, res) => {
 });
 
 routerLogInOut.get("/logout", (req, res) => {
-  const username = req.user.username;
   req.logout(req.user, (err) => {
     if (err) return next(err);
-    res.render("logout", { username });
+    res.render("logout");
   });
 });
 
@@ -35,8 +49,11 @@ routerLogInOut.post(
 
 routerLogInOut.post(
   "/register",
+  upload.single("myFile"),
   passport.authenticate("register", { failureRedirect: "/login/failregister" }),
+
   (req, res) => {
+    enviarMailRegistro(req.body);
     res.redirect("/home");
   }
 );

@@ -8,10 +8,10 @@ routerCart.get("/:id/productos", async (req, res) => {
 });
 
 routerCart.get("/", async (req, res) => {
-  let IdCart = await carritoDAO.getBySearch({
+  let cart = await carritoDAO.getBySearch({
     userId: req.session.passport.user,
   });
-  res.send(IdCart._id);
+  res.send(cart._id);
 });
 
 routerCart.delete("/:id", (req, res) => {

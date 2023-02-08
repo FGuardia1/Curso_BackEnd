@@ -1,9 +1,27 @@
 let seccionMuestrarioProd = document.getElementById("products-container");
-
+let btnCerrarSesion = document.getElementById("btn_cerrar_sesion");
 let carritoTabla = document.getElementById("tablaCarrito");
+let botonPedido = document.getElementById("botonPedido");
 let botonVaciarCarrito = document.getElementById("botonVaciarCarrito");
 seccionMuestrarioProd.addEventListener("click", agregarProducto);
 botonVaciarCarrito.addEventListener("click", vaciarCarrito);
+botonPedido.addEventListener("click", crearPedido);
+
+function crearPedido() {
+  fetch("/api/pedido/new", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+}
+
+function cerrarSesion() {
+  fetch("/login/logout", {
+    headers: { "Content-Type": "application/json" },
+    method: "GET",
+  });
+}
 
 async function vaciarCarrito() {
   let idCart = await fetch("/api/carrito/", {

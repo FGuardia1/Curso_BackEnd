@@ -10,9 +10,9 @@ routerPedido.post("/new", async (req, res) => {
     userId: idUser,
   });
 
-  //enviarMailPedido({ name, email, lista: cart.productos });
-  // sendmsj(telephone);
-  //sendwsp({ name, email });
+  enviarMailPedido({ name, email, lista: cart.productos });
+  sendmsj(telephone);
+  sendwsp({ name, email });
 });
 
 export default routerPedido;

@@ -13,9 +13,9 @@ import { Strategy as LocalStrategy } from "passport-local";
 import * as strategy from "./passport/strategy.js";
 import path from "path";
 import { User } from "../utils/models/user.js";
-
+import { proyectConfig, twilioConfig } from "../utils/configs/config.js";
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = proyectConfig.PORT || 3000;
 const dirname = `${process.cwd()}`;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,8 +33,8 @@ app.engine(
   "handlebars",
   exphbs.engine({
     defaultLayout: "main",
-    layoutsDir: path.join(dirname, "src/views", "layouts"),
-    partialsDir: path.join(dirname, "src/views", "partials"),
+    layoutsDir: path.join(dirname, "src", "views", "layouts"),
+    partialsDir: path.join(dirname, "src", "views", "partials"),
   })
 );
 
@@ -42,8 +42,7 @@ app.use(cookieParser());
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://fer:contra123@cluster0.emeikir.mongodb.net/?retryWrites=true&w=majority",
+      mongoUrl: proyectConfig.URL_MONGO_ATLAS,
       ttl: 600,
     }),
     secret: "sh",
@@ -95,7 +94,7 @@ const server = app.listen(PORT, async () => {
   console.log(`Servidor corriendo en puerto: ${PORT}`);
   try {
     await mongoose.connect(
-      "mongodb+srv://fer:contra123@cluster0.emeikir.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerceBackend",
+      proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

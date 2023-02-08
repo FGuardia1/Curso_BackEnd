@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-
-const DB_URL =
-  "mongodb+srv://fer:contra123@cluster0.emeikir.mongodb.net/?retryWrites=true&w=majority&dbName=ecommerceBackend";
+import { proyectConfig } from "../../utils/configs/config.js";
+const DB_URL = proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend";
 
 export default class ContenedorMongoDB {
   constructor(collection) {

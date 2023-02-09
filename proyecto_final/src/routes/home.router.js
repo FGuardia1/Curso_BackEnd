@@ -13,4 +13,7 @@ routerHome.get("/home", Authenticated, async (req, res) => {
     logger.error(error);
   }
 });
+routerHome.get("/", Authenticated, async (req, res) => {
+  res.redirect("/home");
+});
 export default routerHome;

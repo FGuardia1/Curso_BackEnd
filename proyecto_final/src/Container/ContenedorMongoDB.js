@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { proyectConfig } from "../../utils/configs/config.js";
 const DB_URL = proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend";
-
+import logger from "../../utils/logger.js";
 export default class ContenedorMongoDB {
   constructor(collection) {
     this.collection = collection;
@@ -10,7 +10,7 @@ export default class ContenedorMongoDB {
 
   async init() {
     await mongoose.connect(DB_URL);
-    console.log("conectado");
+    logger.info("conectado");
   }
 
   async create(data) {

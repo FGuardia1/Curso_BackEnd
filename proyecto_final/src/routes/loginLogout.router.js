@@ -4,7 +4,7 @@ import passport from "passport";
 import multer from "multer";
 import { carritoDAO } from "../daos/index.js";
 import { enviarMailRegistro } from "../services/sendEmail.js";
-
+import logger from "../../utils/logger.js";
 const myStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/avatars");
@@ -33,10 +33,14 @@ routerLogInOut.get("/faillogin", (req, res) => {
 });
 
 routerLogInOut.get("/logout", (req, res) => {
-  req.logout(req.user, (err) => {
-    if (err) return next(err);
-    res.render("logout");
-  });
+  try {
+    req.logout(req.user, (err) => {
+      if (err) return next(err);
+      res.render("logout");
+    });
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerLogInOut.post(
@@ -53,14 +57,15 @@ routerLogInOut.post(
   passport.authenticate("register", { failureRedirect: "/login/failregister" }),
   async (req, res) => {
     let userId = req.session.passport.user;
-
     let timestamp = new Date().toLocaleString();
     let productos = [];
-    let newCartId = await carritoDAO.create({ timestamp, productos, userId });
-
-    enviarMailRegistro(req.body);
-
-    res.redirect("/home");
+    try {
+      let newCartId = await carritoDAO.create({ timestamp, productos, userId });
+      enviarMailRegistro(req.body);
+      res.redirect("/home");
+    } catch (error) {
+      logger.error(error);
+    }
   }
 );
 

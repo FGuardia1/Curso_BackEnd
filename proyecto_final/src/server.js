@@ -14,6 +14,7 @@ import * as strategy from "./passport/strategy.js";
 import path from "path";
 import { User } from "../utils/models/user.js";
 import { proyectConfig, twilioConfig } from "../utils/configs/config.js";
+import logger from "../utils/logger.js";
 const app = express();
 const PORT = proyectConfig.PORT || 3000;
 const dirname = `${process.cwd()}`;
@@ -91,7 +92,8 @@ app.use("*", (req, res) => {
   res.send("Pagina no encontrada");
 });
 const server = app.listen(PORT, async () => {
-  console.log(`Servidor corriendo en puerto: ${PORT}`);
+  logger.info(`Servidor corriendo en puerto: ${PORT}`);
+
   try {
     await mongoose.connect(
       proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
@@ -100,10 +102,10 @@ const server = app.listen(PORT, async () => {
         useUnifiedTopology: true,
       }
     );
-    console.log("DB mongo conectada");
+    logger.info("DB mongo conectada");
   } catch (error) {
-    console.log(`Error en conexión de Base de datos: ${error}`);
+    logger.error(`Error en conexión de Base de datos: ${error}`);
   }
 });
 
-server.on("error", (err) => console.log(err));
+server.on("error", (err) => logger.error(err));

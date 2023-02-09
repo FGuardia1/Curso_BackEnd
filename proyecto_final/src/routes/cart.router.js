@@ -1,62 +1,92 @@
 import express from "express";
 const routerCart = express.Router();
 import { productosDAO, carritoDAO } from "../daos/index.js";
-
+import logger from "../../utils/logger.js";
 routerCart.get("/:id/productos", async (req, res) => {
-  let cart = await carritoDAO.getById(req.params.id);
-  res.send(cart.productos);
+  try {
+    let cart = await carritoDAO.getById(req.params.id);
+    res.send(cart.productos);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerCart.get("/", async (req, res) => {
-  let cart = await carritoDAO.getBySearch({
-    userId: req.session.passport.user,
-  });
-  res.send(cart._id);
+  try {
+    let cart = await carritoDAO.getBySearch({
+      userId: req.session.passport.user,
+    });
+    res.send(cart._id);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerCart.delete("/:id", (req, res) => {
   const id = req.params.id;
-  carritoDAO.delete(id);
-  res.status(200).send("Carrito eliminado");
+
+  try {
+    carritoDAO.delete(id);
+    res.status(200).send("Carrito eliminado");
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerCart.post("/", async (req, res) => {
   let userId = req.session.passport.user;
-  let resp = await carritoDAO.getBySearch({ userId });
-  if (!resp) {
-    let timestamp = new Date().toLocaleString();
-    let productos = [];
+
+  let timestamp = new Date().toLocaleString();
+  let productos = [];
+
+  try {
     let newCartId = await carritoDAO.create({ timestamp, productos, userId });
     res.send({ id: newCartId });
+
+    res.send("Carrito existente");
+  } catch (error) {
+    logger.error(error);
   }
-  res.send("Carrito existente");
 });
 
 routerCart.post("/:id/productos", async (req, res) => {
   const idCart = req.params.id;
   let { idProd } = req.body;
-  let carrito = await carritoDAO.getById(idCart);
-  let producto = await productosDAO.getById(idProd);
-  carrito.productos.push(producto);
-  carritoDAO.modify(idCart, carrito);
-  res.status(200).send(carrito.productos);
+
+  try {
+    let carrito = await carritoDAO.getById(idCart);
+    let producto = await productosDAO.getById(idProd);
+    carrito.productos.push(producto);
+    carritoDAO.modify(idCart, carrito);
+    res.status(200).send(carrito.productos);
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerCart.delete("/:id/productos/:id_prod", async (req, res) => {
   const idCart = req.params.id;
   const idProd = req.params.id_prod;
-  let carrito = await carritoDAO.getById(idCart);
-  carrito.productos = carrito.productos.filter((el) => el.id != idProd);
-  carritoDAO.modify(idCart, carrito);
-  res.status(200).send("Producto eliminado de carrito");
+  try {
+    let carrito = await carritoDAO.getById(idCart);
+    carrito.productos = carrito.productos.filter((el) => el.id != idProd);
+    carritoDAO.modify(idCart, carrito);
+    res.status(200).send("Producto eliminado de carrito");
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 routerCart.delete("/:id/productos", async (req, res) => {
   const idCart = req.params.id;
-  let carrito = await carritoDAO.getById(idCart);
-  carrito.productos = [];
-  carritoDAO.modify(idCart, carrito);
-  res.status(200).send("Carrito vaciado");
+  try {
+    let carrito = await carritoDAO.getById(idCart);
+    carrito.productos = [];
+    carritoDAO.modify(idCart, carrito);
+    res.status(200).send("Carrito vaciado");
+  } catch (error) {
+    logger.error(error);
+  }
 });
 
 export default routerCart;

@@ -26,10 +26,10 @@ routerLogInOut.get("/register", (req, res, next) => {
 });
 
 routerLogInOut.get("/failregister", (req, res) => {
-  res.render("register-error", {});
+  res.render("register-error");
 });
 routerLogInOut.get("/faillogin", (req, res) => {
-  res.render("login-error", {});
+  res.render("login-error");
 });
 
 routerLogInOut.get("/logout", (req, res) => {

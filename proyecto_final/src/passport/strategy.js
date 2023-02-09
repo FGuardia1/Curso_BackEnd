@@ -1,7 +1,7 @@
 import { User } from "../../utils/models/user.js";
 import bCrypt from "bcrypt";
 import path from "path";
-
+import logger from "../../utils/logger.js";
 const dirname = `${process.cwd()}`;
 
 const validatePassword = (user, password) => {
@@ -16,11 +16,12 @@ const login = (req, username, password, cb) => {
   User.findOne({ email: username }, (err, user) => {
     if (err) return cb(err);
     if (!user) {
-      console.log("User Not Found with email " + email);
+      logger.info("User Not Found with email " + username);
+
       return cb(null, false);
     }
     if (!validatePassword(user, password)) {
-      console.log("Invalid Password");
+      logger.info("Invalid Password");
       return cb(null, false);
     }
     return cb(null, user);
@@ -31,11 +32,12 @@ const register = (req, username, password, cb) => {
   const file = req.file;
   User.findOne({ email: username }, function (err, user) {
     if (err) {
-      console.log("Error in SignUp: " + err);
+      logger.info("Error in SignUp: " + err.message);
+
       return cb(err);
     }
     if (user) {
-      console.log("User already exists");
+      logger.info("User already exists");
       return cb(null, false);
     } else {
       let path_avatar = path.join(dirname, "public", "avatar", file.filename);

@@ -39,7 +39,7 @@ routerLogInOut.get("/logout", (req, res) => {
       res.render("logout");
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 

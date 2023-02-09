@@ -23,7 +23,7 @@ export default class ContenedorMongoDB {
   }
 
   async getBySearch(filter) {
-    return await this.collection.findOne(filter);
+    return await this.collection.findOne(filter).lean();
   }
   async getAll() {
     return await this.collection.find().lean();

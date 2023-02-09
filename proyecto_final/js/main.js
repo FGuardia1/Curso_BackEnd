@@ -35,9 +35,7 @@ async function vaciarCarrito() {
     headers: { "Content-Type": "application/json" },
     method: "DELETE",
   });
-  //response = await response.json();
 
-  console.log(response.status);
   carritoTabla.innerHTML = "";
 }
 
@@ -49,7 +47,6 @@ async function agregarProducto(e) {
     const productoSeleccionado = e.target.parentElement;
     //obtengo el id del producto, es el numero del id
     let idProd = productoSeleccionado.getAttribute("id");
-    ///selecciona el producto por el codigo
 
     let idCart = await fetch("/api/carrito/", {
       headers: { "Content-Type": "application/json" },

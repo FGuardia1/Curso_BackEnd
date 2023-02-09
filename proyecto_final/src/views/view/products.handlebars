@@ -40,6 +40,21 @@
       </tr>
     </thead>
     <tbody id="tablaCarrito">
+      {{#each listaCarrito}}
+
+     <tr>  
+  <td><img
+  class="card-img-top img-fluid"
+  src={{this.foto}}
+  alt="Card image cap"
+  style="width: 70px;"
+/></td>
+  <td>{{this.nombre}}</td>
+  <td>${{this.precio}}</td>
+  
+</tr> 
+
+    {{/each}}
     </tbody>
   </table>
 

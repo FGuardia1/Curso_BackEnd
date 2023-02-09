@@ -10,7 +10,7 @@ routerProduct.get("/:id?", async (req, res) => {
       return res.send(await productosDAO.getById(req.params.id));
     else res.send(await productosDAO.getAll());
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -31,7 +31,7 @@ routerProduct.post("/", async (req, res) => {
     });
     res.status(200).send("Producto agregado");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -43,7 +43,7 @@ routerProduct.put("/:id", (req, res) => {
     productosDAO.modify(id, producto);
     res.status(200).send("Producto modificado");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -53,7 +53,7 @@ routerProduct.delete("/:id", (req, res) => {
     productosDAO.delete(id);
     res.status(200).send("Producto eliminado");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 

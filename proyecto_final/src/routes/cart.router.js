@@ -7,7 +7,7 @@ routerCart.get("/:id/productos", async (req, res) => {
     let cart = await carritoDAO.getById(req.params.id);
     res.send(cart.productos);
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -18,7 +18,7 @@ routerCart.get("/", async (req, res) => {
     });
     res.send(cart._id);
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -29,7 +29,7 @@ routerCart.delete("/:id", (req, res) => {
     carritoDAO.delete(id);
     res.status(200).send("Carrito eliminado");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -45,7 +45,7 @@ routerCart.post("/", async (req, res) => {
 
     res.send("Carrito existente");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -60,7 +60,7 @@ routerCart.post("/:id/productos", async (req, res) => {
     carritoDAO.modify(idCart, carrito);
     res.status(200).send(carrito.productos);
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -73,7 +73,7 @@ routerCart.delete("/:id/productos/:id_prod", async (req, res) => {
     carritoDAO.modify(idCart, carrito);
     res.status(200).send("Producto eliminado de carrito");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 
@@ -85,7 +85,7 @@ routerCart.delete("/:id/productos", async (req, res) => {
     carritoDAO.modify(idCart, carrito);
     res.status(200).send("Carrito vaciado");
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 

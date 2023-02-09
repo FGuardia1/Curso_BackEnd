@@ -15,7 +15,7 @@ routerPedido.post("/new", async (req, res) => {
     sendmsj(telephone);
     sendwsp({ name, email });
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
   }
 });
 

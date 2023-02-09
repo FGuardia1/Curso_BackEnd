@@ -5,9 +5,10 @@ import Authenticated from "../middlewars/index.js";
 import logger from "../../utils/logger.js";
 
 routerHome.get("/home", Authenticated, async (req, res) => {
+  const { name, avatar_path } = req.user;
   try {
     const products = await productosDAO.getAll();
-    res.render("products", { products });
+    res.render("products", { products, name, avatar_path });
   } catch (error) {
     logger.error(error);
   }

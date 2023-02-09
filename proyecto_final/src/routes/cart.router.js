@@ -22,10 +22,14 @@ routerCart.delete("/:id", (req, res) => {
 
 routerCart.post("/", async (req, res) => {
   let userId = req.session.passport.user;
-  let timestamp = new Date().toLocaleString();
-  let productos = [];
-  let newCartId = await carritoDAO.create({ timestamp, productos, userId });
-  res.send({ id: newCartId });
+  let resp = await carritoDAO.getBySearch({ userId });
+  if (!resp) {
+    let timestamp = new Date().toLocaleString();
+    let productos = [];
+    let newCartId = await carritoDAO.create({ timestamp, productos, userId });
+    res.send({ id: newCartId });
+  }
+  res.send("Carrito existente");
 });
 
 routerCart.post("/:id/productos", async (req, res) => {

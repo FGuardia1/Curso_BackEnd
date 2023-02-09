@@ -2,7 +2,7 @@ import express from "express";
 const routerLogInOut = express.Router();
 import passport from "passport";
 import multer from "multer";
-
+import { carritoDAO } from "../daos/index.js";
 import { enviarMailRegistro } from "../services/sendEmail.js";
 
 const myStorage = multer.diskStorage({
@@ -51,9 +51,15 @@ routerLogInOut.post(
   "/register",
   upload.single("myFile"),
   passport.authenticate("register", { failureRedirect: "/login/failregister" }),
+  async (req, res) => {
+    let userId = req.session.passport.user;
 
-  (req, res) => {
+    let timestamp = new Date().toLocaleString();
+    let productos = [];
+    let newCartId = await carritoDAO.create({ timestamp, productos, userId });
+
     enviarMailRegistro(req.body);
+
     res.redirect("/home");
   }
 );

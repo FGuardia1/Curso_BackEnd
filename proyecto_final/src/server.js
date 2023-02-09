@@ -15,6 +15,12 @@ import path from "path";
 import { User } from "../utils/models/user.js";
 import { proyectConfig, twilioConfig } from "../utils/configs/config.js";
 import logger from "../utils/logger.js";
+import { cpus } from "os";
+import cluster from "cluster";
+let cantCpus = cpus().length;
+
+const MODO = proyectConfig.MODO;
+
 const app = express();
 const PORT = proyectConfig.PORT || 3000;
 const dirname = `${process.cwd()}`;
@@ -91,21 +97,45 @@ app.get("/js/main.js", function (req, res) {
 app.use("*", (req, res) => {
   res.send("Pagina no encontrada");
 });
-const server = app.listen(PORT, async () => {
-  logger.info(`Servidor corriendo en puerto: ${PORT}`);
 
-  try {
-    await mongoose.connect(
-      proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+if (MODO == "CLUSTER") {
+  if (cluster.isPrimary) {
+    for (let index = 0; index < cantCpus; index++) {
+      cluster.fork();
+    }
+  } else {
+    const server = app.listen(PORT, async () => {
+      logger.info(`Servidor corriendo en puerto: ${PORT}`);
+      try {
+        await mongoose.connect(
+          proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
+          {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+          }
+        );
+        logger.info("DB mongo conectada");
+      } catch (error) {
+        logger.error(`Error en conexión de Base de datos: ${error}`);
       }
-    );
-    logger.info("DB mongo conectada");
-  } catch (error) {
-    logger.error(`Error en conexión de Base de datos: ${error}`);
+    });
+    server.on("error", (err) => logger.error(err));
   }
-});
-
-server.on("error", (err) => logger.error(err));
+} else {
+  const server = app.listen(PORT, async () => {
+    logger.info(`Servidor corriendo en puerto: ${PORT}`);
+    try {
+      await mongoose.connect(
+        proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend",
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        }
+      );
+      logger.info("DB mongo conectada");
+    } catch (error) {
+      logger.error(`Error en conexión de Base de datos: ${error}`);
+    }
+  });
+  server.on("error", (err) => logger.error(err));
+}

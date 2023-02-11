@@ -2,67 +2,29 @@ const express = require("express");
 const { Router } = express;
 const routerLog = Router();
 const passport = require("passport");
-const logger = require("../utils/logger.js");
-routerLog.get("/", (req, res, next) => {
-  logger.info(
-    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-  );
-  res.redirect("/login");
-});
-routerLog.get("/login", (req, res, next) => {
-  logger.info(
-    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-  );
-  res.render("view/login");
-});
-routerLog.get("/register", (req, res, next) => {
-  logger.info(
-    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-  );
-  res.render("view/register");
-});
+const loginControllers = require("../controller/operaciones_logIn_logOut_register.js");
+routerLog.get("/", loginControllers.aLogIn);
 
-routerLog.get("/failregister", (req, res) => {
-  res.render("view/register-error", {});
-});
-routerLog.get("/faillogin", (req, res) => {
-  logger.info(
-    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-  );
-  res.render("view/login-error", {});
-});
+routerLog.get("/login", loginControllers.mostrarLogIn);
 
-routerLog.get("/logout", (req, res) => {
-  logger.info(
-    `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-  );
-  const username = req.user.username;
-  req.logout(req.user, (err) => {
-    if (err) return next(err);
-    res.render("view/logout", { username });
-  });
-});
+routerLog.get("/register", loginControllers.mostrarRegister);
+
+routerLog.get("/failregister", loginControllers.mostrarFailRegister);
+
+routerLog.get("/faillogin", loginControllers.mostrarFailLogin);
+
+routerLog.get("/logout", loginControllers.cerrarSesion);
 
 routerLog.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/faillogin" }),
-  (req, res) => {
-    logger.info(
-      `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-    );
-    res.redirect("/home");
-  }
+  loginControllers.iniciarSesion
 );
 
 routerLog.post(
   "/register",
   passport.authenticate("register", { failureRedirect: "/failregister" }),
-  (req, res) => {
-    logger.info(
-      `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
-    );
-    res.redirect("/home");
-  }
+  loginControllers.iniciarSesion
 );
 
 module.exports = routerLog;

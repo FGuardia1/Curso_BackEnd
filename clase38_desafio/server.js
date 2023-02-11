@@ -94,6 +94,14 @@ app.use("/", myRouter.routerLog);
 app.use("/", myRouter.routerProduct);
 app.use("/api", myRouter.routerRandom);
 app.use("/", myRouter.routerInfo);
+
+app.get("/*", (req, res, next) => {
+  res.send("error 404, pagina no encontrada");
+  logger.warn(
+    `Se intento acceder a la ruta inexistente ${req.originalUrl} por el metodo ${req.method} `
+  );
+});
+
 io.on("connection", async (socket) => {
   console.log("Un cliente se ha conectado");
   try {

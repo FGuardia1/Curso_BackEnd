@@ -1,5 +1,4 @@
-const getCollectionRandom = require("../utils/randoms.utils.js");
-
+const getCollectionRandom = require("../negocio/operaciones_random.js");
 const logger = require("../utils/logger.js");
 
 const obtenerRandom = (req, res, next) => {

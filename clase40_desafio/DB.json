@@ -1,0 +1,54 @@
+[
+  {
+    "argumentos": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase38_desafio\\server.js"
+    ],
+    "nombrePlataforma": "win32",
+    "versionNode": "v16.16.0",
+    "memoria": 126736,
+    "pathEjec": "C:\\Program Files\\nodejs\\node.exe",
+    "IdProceso": 3500,
+    "carpetaProy": "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase38_desafio",
+    "cantProc": 4
+  },
+  {
+    "argumentos": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase38_desafio\\server.js"
+    ],
+    "nombrePlataforma": "win32",
+    "versionNode": "v16.16.0",
+    "memoria": 142640,
+    "pathEjec": "C:\\Program Files\\nodejs\\node.exe",
+    "IdProceso": 3500,
+    "carpetaProy": "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase38_desafio",
+    "cantProc": 4
+  },
+  {
+    "argumentos": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase40_desafio\\server.js"
+    ],
+    "nombrePlataforma": "win32",
+    "versionNode": "v16.16.0",
+    "memoria": 142308,
+    "pathEjec": "C:\\Program Files\\nodejs\\node.exe",
+    "IdProceso": 2436,
+    "carpetaProy": "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase40_desafio",
+    "cantProc": 4
+  },
+  {
+    "argumentos": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase40_desafio\\server.js"
+    ],
+    "nombrePlataforma": "win32",
+    "versionNode": "v16.16.0",
+    "memoria": 142308,
+    "pathEjec": "C:\\Program Files\\nodejs\\node.exe",
+    "IdProceso": 2436,
+    "carpetaProy": "C:\\Users\\WilllianWin10\\Desktop\\Backend\\clase6\\desafio\\clase40_desafio",
+    "cantProc": 4
+  }
+]

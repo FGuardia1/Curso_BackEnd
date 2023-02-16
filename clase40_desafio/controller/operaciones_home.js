@@ -13,8 +13,18 @@ const visualizarPagProd = async (req, res, next) => {
   req.session.resetMaxAge;
 
   let productos = await prodsRepo.getAll();
+  let msjs = await msjsRepo.getAll();
+  msjs = msjs.map((e) => {
+    e.date = new Date(e.date).toLocaleString();
 
-  res.render("view/form_table_chat", { nombre: req.user.username, productos });
+    return e;
+  });
+  console.log("nuevo array" + msjs);
+  res.render("view/form_table_chat", {
+    nombre: req.user.username,
+    productos,
+    msjs,
+  });
 };
 
 const addProduct = async (req, res, next) => {
@@ -28,13 +38,15 @@ const addProduct = async (req, res, next) => {
 };
 
 const addMsg = async (req, res, next) => {
-  let { nombre, apellido, edad, alias, avatar } = req.body;
+  let { email, nombre, apellido, edad, alias, avatar, texto, date } = req.body;
   try {
-    msjsRepo.add(new Msj({ nombre, apellido, edad, alias, avatar }));
+    msjsRepo.add(
+      new Msj({ email, nombre, apellido, edad, alias, avatar, texto, date })
+    );
+    res.status(200).send({ valor: "agregado" });
   } catch (error) {
     logger.error(error.message);
   }
-  // await ProdDao.save({ title, price, thumbnail });
 };
 
 export { visualizarPagProd, addProduct, addMsg };

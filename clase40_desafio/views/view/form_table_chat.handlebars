@@ -59,10 +59,7 @@
 
 <h1>Centro de mensajes</h1>
 <h2 id="compresionChat"></h2>
-<form
-  onsubmit="return addMessage(this)"
-  class="d-flex flex-column align-items-start"
->
+<form id="formMsj" class="d-flex flex-column align-items-start">
   <input type="text" id="userEmail" placeholder="Email..." required />
   <input type="text" id="userNombre" placeholder="Nombre..." />
   <input type="text" id="userApellido" placeholder="Apellido..." />
@@ -74,4 +71,12 @@
   <input type="submit" value="Enviar" />
 </form>
 
-<div id="messages"></div>
+<div id="messages">
+  {{#each msjs}}
+    <div><strong class="text-primary">{{this.email}}</strong><span
+        style="color:brown"
+      >[{{this.date}}]</span>:
+      <i style="color:green">{{this.texto}}</i>
+      <img width="20" height="20" src="{{this.avatar}}" />`</div>
+  {{/each}}
+</div>

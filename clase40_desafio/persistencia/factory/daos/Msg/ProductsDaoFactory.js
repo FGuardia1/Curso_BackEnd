@@ -12,11 +12,11 @@ let dao;
 switch (opcion) {
   case "Mongo":
     dao = new ProductsDaoDb(cnxStr);
-    //  await dao.init();
+    await dao.init();
     break;
   case "File":
     dao = new ProductsDaoFile(rutaArchivoProds);
-    //  await dao.init();
+    await dao.init();
     break;
   default:
     dao = new ProductsDaoMem();

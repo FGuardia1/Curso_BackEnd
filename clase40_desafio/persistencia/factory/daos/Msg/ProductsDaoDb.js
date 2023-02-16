@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { asDto } from "../dtos/ProductDTO.js";
+import { asDto } from "../../dtos/ProductDTO.js";
 
 const productSchema = new mongoose.Schema({
   id: { type: Number },

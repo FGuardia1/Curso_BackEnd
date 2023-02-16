@@ -1,9 +1,9 @@
 export class ProductDto {
-  constructor({ title, price, thumbnail, id }) {
+  constructor({ id, title, price, thumbnail }) {
+    this.id = id;
     this.title = title;
     this.price = price;
     this.thumbnail = thumbnail;
-    this.id = id;
   }
 }
 export function asDto(prods) {

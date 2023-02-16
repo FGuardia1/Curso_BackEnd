@@ -1,4 +1,4 @@
-import { asDto } from "../dtos/ProductDTO.js";
+import { asDto } from "../../dtos/ProductDTO.js";
 
 export default class ProductsDaoMem {
   constructor() {

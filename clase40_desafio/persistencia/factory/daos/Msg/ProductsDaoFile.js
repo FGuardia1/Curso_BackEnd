@@ -1,6 +1,5 @@
 import fs from "fs";
-
-import { asDto } from "../dtos/ProductDTO.js";
+import { asDto } from "../../dtos/ProductDTO.js";
 
 export default class ProductsDaoFile {
   constructor(ruta) {

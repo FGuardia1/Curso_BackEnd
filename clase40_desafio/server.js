@@ -98,7 +98,7 @@ passport.deserializeUser((id, done) => {
 
 app.use("/", myRouter.routerLog);
 
-app.use("/", myRouter.routerProduct);
+app.use("/", myRouter.routerHome);
 app.use("/api", myRouter.routerRandom);
 app.use("/", myRouter.routerInfo);
 

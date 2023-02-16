@@ -86,6 +86,8 @@ const agregarProd = async (e) => {
   });
   resp = await resp.json();
 
+  renderProductAdd(product);
+
   console.log("resp");
 };
 

@@ -10,29 +10,4 @@
     "price": "200",
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-64.png",
     "id": 2
-  },
-  {
-    "title": "calculadora",
-    "price": "5000",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-64.png",
-    "id": 3
-  },
-  {
-    "title": "globo terraqueo",
-    "price": "7000",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-64.png",
-    "id": 4
-  },
-  {
-    "title": "calculadora",
-    "price": "4000",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-64.png",
-    "id": 5
-  },
-  {
-    "title": "aa",
-    "price": "111",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-64.png",
-    "id": 6
-  }
-]
+  }]

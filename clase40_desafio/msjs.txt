@@ -20,38 +20,4 @@
     "email": "a@gmail.com",
     "texto": "Todo bien",
     "date": "2023-02-16T20:43:42.518Z"
-  },
-  {
-    "id": 3,
-    "nombre": "juan",
-    "apellido": "Gomez",
-    "edad": "20",
-    "alias": "juan123",
-    "avatar": "https://www.stickees.com/files/avatars/face-avatars/1598-male-face-g4-sticker.png",
-    "email": "a@gmail.com",
-    "texto": "que tal??",
-    "date": "2023-02-16T20:44:31.685Z"
-  },
-  {
-    "id": 4,
-    "nombre": "juan",
-    "apellido": "Gomez",
-    "edad": "20",
-    "alias": "juan123",
-    "avatar": "https://www.stickees.com/files/avatars/face-avatars/1598-male-face-g4-sticker.png",
-    "email": "a@gmail.com",
-    "texto": "holaaa",
-    "date": "2023-02-16T20:45:57.354Z"
-  },
-  {
-    "id": 5,
-    "nombre": "juan",
-    "apellido": "Gomez",
-    "edad": "20",
-    "alias": "juan123",
-    "avatar": "https://www.stickees.com/files/avatars/face-avatars/1598-male-face-g4-sticker.png",
-    "email": "a@gmail.com",
-    "texto": "fffff",
-    "date": "2023-02-16T20:51:16.863Z"
-  }
-]
+  }]

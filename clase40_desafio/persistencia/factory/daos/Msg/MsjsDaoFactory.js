@@ -1,11 +1,16 @@
 import MsjsDaoFile from "./MsjsDaoFile.js";
 import MsjsDaoMem from "./MsjsDaoMem.js";
 const rutaArchivoProds = "./msjs.txt";
+import parseArgs from "minimist";
+const options = {
+  default: { opcionDao: "Mem" },
+};
+const argumentos = parseArgs(process.argv.slice(2), options);
 
-const opcion = "File" || "Mem";
+const OPCION_DAO = argumentos.opcionDao;
 
 let dao;
-switch (opcion) {
+switch (OPCION_DAO) {
   case "File":
     dao = new MsjsDaoFile(rutaArchivoProds);
     await dao.init();

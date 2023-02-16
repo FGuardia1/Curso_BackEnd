@@ -7,7 +7,7 @@ const env = process.env;
 import parseArgs from "minimist";
 
 const options = {
-  default: { puerto: 8080, modo: "fork" },
+  default: { puerto: 8080, modo: "fork", opcionDao: "Mem" },
 };
 const argumentos = parseArgs(process.argv.slice(2), options);
 const MONGO_ATLAS_URL = env.MONGO_ATLAS_URL;

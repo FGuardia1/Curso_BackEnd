@@ -2,7 +2,7 @@ const getRandomNumber = () => {
   return Math.floor(Math.random() * 1000) + 1;
 };
 
-const getCollectionRandom = (cant) => {
+export const getCollectionRandom = (cant) => {
   let collect = {};
   let numberRandom;
   for (let i = 0; i < cant; i++) {
@@ -11,5 +11,3 @@ const getCollectionRandom = (cant) => {
   }
   return collect;
 };
-
-module.exports = getCollectionRandom;

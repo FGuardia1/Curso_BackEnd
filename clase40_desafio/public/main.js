@@ -11,6 +11,8 @@ const chatSchema = new normalizr.schema.Entity("chat", {
   mensajes: [mensajeSchema],
 });
 
+const formProd = document.getElementById("formProd");
+
 const renderProduct = (data) => {
   const html = data
     .map((elem, index) => {
@@ -67,14 +69,24 @@ const renderMessageAdd = (data) => {
   document.querySelector("#messages").append(div);
 };
 
-const addProduct = (e) => {
+const agregarProd = async (e) => {
+  e.preventDefault();
   const product = {
     title: document.querySelector("#title").value,
     price: document.querySelector("#price").value,
     thumbnail: document.querySelector("#thumbnail").value,
   };
-  socket.emit("new-product", product);
-  return false;
+
+  let resp = await fetch("/add", {
+    body: JSON.stringify(product),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+  resp = await resp.json();
+
+  console.log("resp");
 };
 
 const addMessage = (e) => {
@@ -127,3 +139,5 @@ socket.on("messages", (data) => {
 socket.on("messages-push", (data) => {
   renderMessageAdd(data);
 });
+
+formProd.addEventListener("submit", agregarProd);

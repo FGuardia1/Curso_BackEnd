@@ -1,8 +1,7 @@
-const { guardarFile } = require("../persistencia/archivo.js");
+import { cpus } from "os";
+const numCpu = cpus().length;
 
-const numCpu = require("os").cpus().length;
-
-const getInfoSystem = async () => {
+export const getInfoSystem = async () => {
   let info = {
     argumentos: process.argv,
     nombrePlataforma: process.platform,
@@ -14,8 +13,5 @@ const getInfoSystem = async () => {
     cantProc: numCpu,
   };
 
-  let a = await guardarFile(info);
   return info;
 };
-
-module.exports = getInfoSystem;

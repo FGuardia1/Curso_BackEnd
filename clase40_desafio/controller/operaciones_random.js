@@ -1,7 +1,8 @@
-const getCollectionRandom = require("../negocio/operaciones_random.js");
-const logger = require("../utils/logger.js");
+import { getCollectionRandom } from "../negocio/operaciones_random.js";
 
-const obtenerRandom = (req, res, next) => {
+import { logger } from "../utils/logger.js";
+
+export const obtenerRandom = (req, res, next) => {
   logger.info(
     `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
   );
@@ -12,5 +13,3 @@ const obtenerRandom = (req, res, next) => {
 
   res.send(getCollectionRandom(cant));
 };
-
-module.exports = obtenerRandom;

@@ -1,4 +1,4 @@
-const credential = {
+export default credential = {
   db_firebase: {
     type: "service_account",
     project_id: "ecommercebackend-4361c",
@@ -15,5 +15,3 @@ const credential = {
       "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jgv5y%40ecommercebackend-4361c.iam.gserviceaccount.com",
   },
 };
-
-module.exports = credential;

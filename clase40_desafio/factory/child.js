@@ -1,4 +1,5 @@
-const getCollectionRandom = require("../utils/randoms.utils.js");
+import getCollectionRandom from "../utils/randoms.utils.js";
+
 let res;
 
 process.on("message", (msg) => {

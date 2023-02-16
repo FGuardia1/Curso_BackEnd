@@ -1,10 +1,8 @@
-const express = require("express");
-const { Router } = express;
+import express from "express";
 
-const routerInfo = Router();
-const compression = require("compression");
-const obtenerInfo = require("../controller/operaciones_info");
+export const routerInfo = express.Router();
+import compression from "compression";
+
+import { obtenerInfo } from "../controller/operaciones_info.js";
 
 routerInfo.get("/info", compression(), obtenerInfo);
-
-module.exports = routerInfo;

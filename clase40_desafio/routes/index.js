@@ -1,6 +1,7 @@
-const routerInfo = require("./info");
-const routerLog = require("./loginLogout");
-const routerProduct = require("./productos");
-const routerRandom = require("./random");
+import { routerInfo } from "./info.js";
 
-module.exports = { routerInfo, routerLog, routerProduct, routerRandom };
+import { routerLog } from "./loginLogout.js";
+import { routerProduct } from "./productos.js";
+import { routerRandom } from "./random.js";
+
+export { routerInfo, routerLog, routerProduct, routerRandom };

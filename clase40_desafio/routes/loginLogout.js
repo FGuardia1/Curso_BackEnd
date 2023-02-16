@@ -1,8 +1,9 @@
-const express = require("express");
-const { Router } = express;
-const routerLog = Router();
-const passport = require("passport");
-const loginControllers = require("../controller/operaciones_logIn_logOut_register.js");
+import express from "express";
+
+export const routerLog = express.Router();
+import passport from "passport";
+
+import * as loginControllers from "../controller/operaciones_logIn_logOut_register.js";
 
 routerLog.get("/", loginControllers.aLogIn);
 
@@ -27,5 +28,3 @@ routerLog.post(
   passport.authenticate("register", { failureRedirect: "/failregister" }),
   loginControllers.iniciarSesion
 );
-
-module.exports = routerLog;

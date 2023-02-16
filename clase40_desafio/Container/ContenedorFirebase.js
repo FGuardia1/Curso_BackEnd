@@ -1,7 +1,8 @@
-require("dotenv").config();
+import { config } from "dotenv";
+config();
 const env = process.env;
-const admin = require("firebase-admin");
-const credential = require("../utils/credentials.js");
+import admin from "firebase-admin";
+import credential from "../utils/credentials.js";
 
 const serviceAccount = credential.db_firebase;
 admin.initializeApp({
@@ -9,7 +10,7 @@ admin.initializeApp({
 });
 let db;
 
-class ContenedorFirebase {
+export class ContenedorFirebase {
   constructor(coleccion) {
     this.init(coleccion);
     ///No se puede user async en un constructor
@@ -76,5 +77,3 @@ class ContenedorFirebase {
     }
   }
 }
-
-module.exports = { ContenedorFirebase };

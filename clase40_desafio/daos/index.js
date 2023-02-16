@@ -1,6 +1,7 @@
-const { MockService } = require("../service/mock.service");
-const { MensajesDaoFirebase } = require("./mensajes/mensajesDaoFirebase");
+import { MockService } from "../service/mock.service";
+
+import { MensajesDaoFirebase } from "./mensajes/mensajesDaoFirebase";
 
 let productDAO = new MockService();
 let chatDAO = new MensajesDaoFirebase();
-module.exports = { productDAO, chatDAO };
+export { productDAO, chatDAO };

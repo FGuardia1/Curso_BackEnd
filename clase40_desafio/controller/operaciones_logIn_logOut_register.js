@@ -1,6 +1,6 @@
-const passport = require("passport");
+import passport from "passport";
+import { logger } from "../utils/logger.js";
 
-const logger = require("../utils/logger.js");
 const aLogIn = (req, res, next) => {
   logger.info(
     `Se accedio a la ruta ${req.originalUrl} por el metodo ${req.method} `
@@ -47,7 +47,7 @@ const iniciarSesion = (req, res) => {
   res.redirect("/home");
 };
 
-module.exports = {
+export {
   aLogIn,
   mostrarLogIn,
   mostrarRegister,

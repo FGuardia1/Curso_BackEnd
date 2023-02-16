@@ -1,4 +1,5 @@
-const normalizr = require("normalizr");
+import normalizr from "normalizr";
+
 const normalizar = normalizr.normalize;
 const desnormalizar = normalizr.denormalize;
 
@@ -11,4 +12,4 @@ const chatSchema = new normalizr.schema.Entity("chat", {
   mensajes: [mensajeSchema],
 });
 
-module.exports = { normalizar, desnormalizar, chatSchema };
+export { normalizar, desnormalizar, chatSchema };

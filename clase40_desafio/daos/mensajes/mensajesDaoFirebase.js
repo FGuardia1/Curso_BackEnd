@@ -1,9 +1,7 @@
-const { ContenedorFirebase } = require("../../Container/ContenedorFirebase");
+import { ContenedorFirebase } from "../../Container/ContenedorFirebase";
 
-class MensajesDaoFirebase extends ContenedorFirebase {
+export class MensajesDaoFirebase extends ContenedorFirebase {
   constructor() {
     super("mensajes");
   }
 }
-
-module.exports = { MensajesDaoFirebase };

@@ -1,7 +1,8 @@
-const fs = require("fs");
-import { asDto } from "../dtos/PersonaDTO.js";
+import fs from "fs";
 
-class PersonasDaoFile {
+import { asDto } from "../dtos/ProductDTO.js";
+
+export default class ProductsDaoFile {
   constructor(ruta) {
     this.ruta = ruta;
     this.productos = [];

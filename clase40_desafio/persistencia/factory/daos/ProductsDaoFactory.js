@@ -1,28 +1,28 @@
-import PersonasDaoFile from './PersonasDaoFile.js'
-import PersonasDaoDb from './PersonasDaoDb.js'
-import PersonasDaoMem from './PersonasDaoMem.js'
+import ProductsDaoDb from "./ProductsDaoDb.js";
 
-const rutaArchivoPersonas = './personas.txt'
-const cnxStr = 'mongodb://localhost/test'
+import ProductsDaoFile from "./ProductsDaoFile.js";
+import ProductsDaoMem from "./ProductsDaoMem.js";
 
-const opcion = process.argv[ 2 ] || 'Mem'
+const rutaArchivoProds = "./products.txt";
+const cnxStr = "mongodb://localhost/test";
 
-let dao
+const opcion = "File" || "Mem";
+
+let dao;
 switch (opcion) {
-    case 'Mongo':
-        dao = new PersonasDaoDb(cnxStr)
-        await dao.init()
-        break
-    case 'File':
-        dao = new PersonasDaoFile(rutaArchivoPersonas)
-        await dao.init()
-        break
-    default:
-        dao = new PersonasDaoMem()
+  case "Mongo":
+    dao = new ProductsDaoDb(cnxStr);
+    //  await dao.init();
+    break;
+  case "File":
+    dao = new ProductsDaoFile(rutaArchivoProds);
+    //  await dao.init();
+    break;
+  default:
+    dao = new ProductsDaoMem();
 }
-
-export default class PersonasDaoFactory {
-    static getDao() {
-        return dao
-    }
+export default class ProductsDaoFactory {
+  static getDao() {
+    return dao;
+  }
 }

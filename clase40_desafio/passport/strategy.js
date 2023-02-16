@@ -1,5 +1,6 @@
-const User = require("../models/user.js");
-const bCrypt = require("bcrypt");
+import { User } from "../models/user.js";
+
+import bCrypt from "bcrypt";
 
 const validatePassword = (user, password) => {
   return bCrypt.compareSync(password, user.password);
@@ -43,4 +44,4 @@ const register = (req, username, password, cb) => {
   });
 };
 
-module.exports = { login, register };
+export { login, register };

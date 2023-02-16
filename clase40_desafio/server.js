@@ -1,8 +1,11 @@
-const logger = require("./utils/logger.js");
+import { logger } from "./utils/logger.js";
+import { config } from "dotenv";
+config();
 
-require("dotenv").config();
 const env = process.env;
-const parseArgs = require("minimist");
+
+import parseArgs from "minimist";
+
 const options = {
   default: { puerto: 8080, modo: "fork" },
 };
@@ -10,35 +13,39 @@ const argumentos = parseArgs(process.argv.slice(2), options);
 const MONGO_ATLAS_URL = env.MONGO_ATLAS_URL;
 const PORT = argumentos.puerto;
 const MODO = argumentos.modo;
-const express = require("express");
-const { create } = require("express-handlebars");
-const { Server: HttpServer } = require("http");
-const { Server: IOServer } = require("socket.io");
 
-const { productDAO, chatDAO } = require("./daos");
+import express from "express";
 
-const myRouter = require("./routes/index.js");
-const { normalizar, chatSchema } = require("./utils/normalizar.utils");
+import { create } from "express-handlebars";
+
+import { Server as HttpServer } from "http";
+import { Server as IOServer } from "socket.io";
+
+import * as myRouter from "./routes/index.js";
+
 const app = express();
 
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
-
-const User = require("./models/user.js");
-const mongoose = require("mongoose");
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import { User } from "./models/user.js";
+import mongoose from "mongoose";
 
 app.use(express.static("public"));
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
-const cookieParser = require("cookie-parser");
-const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-const passport = require("passport");
-const Strategy = require("passport-local");
-const { login, register } = require("./passport/strategy.js");
+import cookieParser from "cookie-parser";
 
-const cluster = require("cluster");
-const numCpu = require("os").cpus().length;
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+import passport from "passport";
+import { Strategy } from "passport-local";
+
+import { login, register } from "./passport/strategy.js";
+
+import cluster from "cluster";
+
+import { cpus } from "os";
+const numCpu = cpus().length;
 
 passport.use("register", new Strategy({ passReqToCallback: true }, register));
 passport.use("login", new Strategy({ passReqToCallback: true }, login));
@@ -100,42 +107,6 @@ app.get("/*", (req, res, next) => {
   logger.warn(
     `Se intento acceder a la ruta inexistente ${req.originalUrl} por el metodo ${req.method} `
   );
-});
-
-io.on("connection", async (socket) => {
-  console.log("Un cliente se ha conectado");
-  try {
-    let chat = {
-      id: "mensajes",
-      mensajes: await chatDAO.getAll(),
-    };
-    const chat_normalizado = normalizar(chat, chatSchema);
-
-    socket.emit("list-product", productDAO.getAll());
-    socket.emit("messages", chat_normalizado);
-  } catch (error) {
-    logger.error(error);
-  }
-
-  socket.on("new-message", (data) => {
-    try {
-      chatDAO.create(data);
-    } catch (error) {
-      logger.error(error);
-    }
-
-    io.sockets.emit("messages-push", data);
-  });
-
-  socket.on("new-product", (data) => {
-    try {
-      contenedorProd.save(data);
-    } catch (error) {
-      logger.error(error);
-    }
-
-    io.sockets.emit("product-push", data);
-  });
 });
 
 if (MODO == "cluster") {

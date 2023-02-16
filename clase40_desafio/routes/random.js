@@ -1,7 +1,6 @@
-const express = require("express");
-const { Router } = express;
-const routerRandom = Router();
-obtenerRandom = require("../controller/operaciones_random.js");
-routerRandom.get("/randoms", obtenerRandom);
+import express from "express";
+import { obtenerRandom } from "../controller/operaciones_random.js";
 
-module.exports = routerRandom;
+export const routerRandom = express.Router();
+
+routerRandom.get("/randoms", obtenerRandom);

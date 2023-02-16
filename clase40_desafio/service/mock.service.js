@@ -1,6 +1,6 @@
-const { createFakeProduct } = require("../utils/product.utils");
+import { createFakeProduct } from "../utils/product.utils.js";
 
-class MockService {
+export default class MockService {
   items = [];
   constructor() {
     for (let i = 1; i <= 5; i++) {
@@ -13,5 +13,3 @@ class MockService {
     return this.items;
   }
 }
-
-module.exports = { MockService };

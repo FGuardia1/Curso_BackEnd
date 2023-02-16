@@ -1,11 +1,12 @@
-const mongoose = require("mongoose");
-import { asDto } from "../dtos/PersonaDTO.js";
+import mongoose from "mongoose";
+
+import { asDto } from "../dtos/ProductDTO.js";
 
 const productSchema = new mongoose.Schema({
   id: { type: Number },
-  nombre: { type: String },
-  precio: { type: Number },
-  foto: { type: String },
+  title: { type: String },
+  price: { type: Number },
+  thumbnail: { type: String },
 });
 
 export default class ProductsDaoDb {

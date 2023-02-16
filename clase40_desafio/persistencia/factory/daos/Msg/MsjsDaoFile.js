@@ -1,10 +1,10 @@
 import fs from "fs";
-import { asDto } from "../../dtos/ProductDTO.js";
+import { asDto } from "../../dtos/MsgDTO.js";
 
-export default class ProductsDaoFile {
+export default class MsjsDaoFile {
   constructor(ruta) {
     this.ruta = ruta;
-    this.productos = [];
+    this.msjs = [];
   }
 
   async init() {
@@ -21,52 +21,52 @@ export default class ProductsDaoFile {
 
   async #leerArchivo() {
     const texto = await fs.promises.readFile(this.ruta, "utf-8");
-    this.productos = JSON.parse(texto);
+    this.msjs = JSON.parse(texto);
   }
 
   async #escribirArchivo() {
-    const texto = JSON.stringify(this.productos, null, 2);
+    const texto = JSON.stringify(this.msjs, null, 2);
     await fs.promises.writeFile(this.ruta, texto);
   }
 
   #getIndex(id) {
-    return this.productos.findIndex((productos) => productos.id === id);
+    return this.msjs.findIndex((msjs) => msjs.id === id);
   }
 
   async getAll() {
     await this.#leerArchivo();
-    return asDto(this.productos);
+    return asDto(this.msjs);
   }
 
   async getById(idBuscado) {
     await this.#leerArchivo();
-    return asDto(this.productos[this.#getIndex(idBuscado)]);
+    return asDto(this.msjs[this.#getIndex(idBuscado)]);
   }
 
-  async save(newProd) {
+  async save(newMsjs) {
     await this.#leerArchivo();
-    this.productos.push(newProd);
+    this.msjs.push(newMsjs);
     await this.#escribirArchivo();
-    return asDto(newProd);
+    return asDto(newMsjs);
   }
 
   async deleteById(idParaBorrar) {
     await this.#leerArchivo();
-    const [borrada] = this.productos.splice(this.#getIndex(idParaBorrar), 1);
+    const [borrada] = this.msjs.splice(this.#getIndex(idParaBorrar), 1);
     await this.#escribirArchivo();
     return asDto(borrada);
   }
 
   async deleteAll() {
-    this.productos = [];
+    this.msjs = [];
     await this.#escribirArchivo();
   }
 
-  async updateById(idParaReemplazar, newProduct) {
+  async updateById(idParaReemplazar, newMsj) {
     await this.#leerArchivo();
     const index = this.#getIndex(idParaReemplazar);
-    const actualizada = { ...this.productos[index], ...newProduct };
-    this.productos.splice(index, 1, actualizada);
+    const actualizada = { ...this.msjs[index], ...newMsj };
+    this.msjs.splice(index, 1, actualizada);
     await this.#escribirArchivo();
     return asDto(actualizada);
   }

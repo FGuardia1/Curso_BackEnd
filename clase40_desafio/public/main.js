@@ -47,7 +47,7 @@ const renderMessages = (data) => {
 const renderProductAdd = (data) => {
   const html = `
 	<td>${data.title}</td>
-	<td>${data.price}</td>
+	<td>$${data.price}</td>
 	<td alt="Max-width 50%"><img
 		src="${data.thumbnail}"
 		alt="..."
@@ -87,8 +87,6 @@ const agregarProd = async (e) => {
   resp = await resp.json();
 
   renderProductAdd(product);
-
-  console.log("resp");
 };
 
 const addMessage = (e) => {

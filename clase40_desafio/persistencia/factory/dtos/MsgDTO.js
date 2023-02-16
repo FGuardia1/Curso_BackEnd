@@ -1,12 +1,14 @@
-export class ProductDto {
-  constructor({ id, title, price, thumbnail }) {
+export class MsjDto {
+  constructor({ id, nombre, apellido, edad, alias, avatar }) {
     this.id = id;
-    this.title = title;
-    this.price = price;
-    this.thumbnail = thumbnail;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
+    this.alias = alias;
+    this.avatar = avatar;
   }
 }
-export function asDto(prods) {
-  if (Array.isArray(prods)) return prods.map((p) => new ProductDto(p));
-  else return new ProductDto(prods);
+export function asDto(msjs) {
+  if (Array.isArray(msjs)) return msjs.map((m) => new MsjDto(m));
+  else return new MsjDto(msjs);
 }

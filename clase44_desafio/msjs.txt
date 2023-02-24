@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "juan",
+    "apellido": "Gomez",
+    "edad": "20",
+    "alias": "juan123",
+    "avatar": "https://www.stickees.com/files/avatars/face-avatars/1598-male-face-g4-sticker.png",
+    "email": "a@gmail.com",
+    "texto": "holaaa",
+    "date": "2023-02-16T20:38:35.544Z"
+  },
+  {
+    "id": 2,
+    "nombre": "juan",
+    "apellido": "Gomez",
+    "edad": "20",
+    "alias": "juan123",
+    "avatar": "https://www.stickees.com/files/avatars/face-avatars/1598-male-face-g4-sticker.png",
+    "email": "a@gmail.com",
+    "texto": "Todo bien",
+    "date": "2023-02-16T20:43:42.518Z"
+  }]

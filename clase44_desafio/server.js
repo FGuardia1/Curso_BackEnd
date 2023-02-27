@@ -45,6 +45,7 @@ import { login, register } from "./passport/strategy.js";
 import cluster from "cluster";
 
 import { cpus } from "os";
+import GraphQLController from "./controller/product.graphql.controller.js";
 const numCpu = cpus().length;
 
 passport.use("register", new Strategy({ passReqToCallback: true }, register));
@@ -101,6 +102,7 @@ app.use("/product", myRouter.routerProduct);
 app.use("/", myRouter.routerHome);
 app.use("/api", myRouter.routerRandom);
 app.use("/", myRouter.routerInfo);
+app.use("/graphql", new GraphQLController());
 
 app.get("/*", (req, res, next) => {
   res.send("error 404, pagina no encontrada");

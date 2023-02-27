@@ -6,15 +6,15 @@
     "id": 1
   },
   {
-    "title": "lapiz",
-    "price": "200",
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-64.png",
-    "id": 2
+    "title": "lapicera",
+    "id": 2,
+    "price": 200,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-64.png"
   },
   {
     "title": "calculadora",
-    "price": "4000",
-    "thumbnail": "imagenNueva.jpg",
-    "id": 3
+    "id": 3,
+    "price": 4200,
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png"
   }
 ]

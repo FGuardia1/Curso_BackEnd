@@ -87,7 +87,6 @@ const agregarProd = async (e) => {
     method: "POST",
   });
   resp = await resp.json();
-  console.log(resp.data.createProduct);
 
   renderProductAdd(resp.data.createProduct);
 };
@@ -104,16 +103,42 @@ const addMessage = async (e) => {
     texto: document.querySelector("#text").value,
     date: new Date(),
   };
-  let resp = await fetch("/addMsg", {
-    body: JSON.stringify(message),
+
+  let query = `mutation {
+    createMsj(datos: {
+      email: "${message.email}",
+      nombre: "${message.nombre}",
+      apellido: "${message.apellido}"
+      edad:"${message.edad}"
+      alias:"${message.alias}"
+      avatar:"${message.avatar}"
+      texto:"${message.texto}"
+      date:"${message.date}"
+    }) {
+      id
+      email
+      nombre
+      apellido
+      edad
+      alias
+      avatar
+      texto
+      date
+    }
+    
+  }`;
+
+  let resp = await fetch("/graphqlMsj", {
+    body: JSON.stringify({ query }),
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     method: "POST",
   });
   resp = await resp.json();
 
-  renderMessageAdd(message);
+  renderMessageAdd(resp.data.createMsj);
 
   return false;
 };

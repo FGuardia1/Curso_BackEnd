@@ -37,7 +37,8 @@ export default class MsjsRepo {
   async add(msjNew) {
     msjNew.setId(await this.generateId());
 
-    await this.#dao.save(asDto(msjNew));
+    let newElement = await this.#dao.save(asDto(msjNew));
+    return new Msj(newElement);
   }
 
   async removeById(idBuscado) {

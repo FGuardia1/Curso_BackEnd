@@ -46,6 +46,7 @@ import cluster from "cluster";
 
 import { cpus } from "os";
 import GraphQLController from "./controller/product.graphql.controller.js";
+import MsjGraphQLController from "./controller/msj.graphql.controller.js";
 const numCpu = cpus().length;
 
 passport.use("register", new Strategy({ passReqToCallback: true }, register));
@@ -103,7 +104,7 @@ app.use("/", myRouter.routerHome);
 app.use("/api", myRouter.routerRandom);
 app.use("/", myRouter.routerInfo);
 app.use("/graphql", new GraphQLController());
-
+app.use("/graphqlMsj", new MsjGraphQLController());
 app.get("/*", (req, res, next) => {
   res.send("error 404, pagina no encontrada");
   logger.warn(

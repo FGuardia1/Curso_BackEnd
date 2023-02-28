@@ -65,16 +65,31 @@ const agregarProd = async (e) => {
     thumbnail: document.querySelector("#thumbnail").value,
   };
 
-  let resp = await fetch("/product", {
-    body: JSON.stringify(product),
+  let query = `mutation {
+    createProduct(datos: {
+      title: "${product.title}",
+      price: ${product.price},
+      thumbnail: "${product.thumbnail}"
+    }) {
+      id
+      title
+      thumbnail
+      price
+    }
+  }`;
+
+  let resp = await fetch("/graphql", {
+    body: JSON.stringify({ query }),
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
     method: "POST",
   });
   resp = await resp.json();
+  console.log(resp.data.createProduct);
 
-  renderProductAdd(product);
+  renderProductAdd(resp.data.createProduct);
 };
 
 const addMessage = async (e) => {

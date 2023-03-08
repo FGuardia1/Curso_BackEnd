@@ -7,7 +7,6 @@ const options = {
   default: { puerto: 8080, modo: "fork" },
 };
 const argumentos = parseArgs(process.argv.slice(2), options);
-const MONGO_LOCAL_URI = env.MONGO_LOCAL_URI;
 const MONGO_ATLAS_URL = env.MONGO_ATLAS_URL;
 
 const PORT = argumentos.puerto;
@@ -144,28 +143,10 @@ if (MODO == "cluster") {
   } else {
     httpServer.listen(PORT, async () => {
       console.log(`Server running on PORT ${PORT}, en modo ${MODO}`);
-      try {
-        await mongoose.connect(MONGO_LOCAL_URI, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-        console.log("DB mongo conectada");
-      } catch (error) {
-        console.log(`Error en conexión de Base de datos: ${error}`);
-      }
     });
   }
 } else {
   httpServer.listen(PORT, async () => {
     console.log(`Server running on PORT ${PORT}, en modo ${MODO}`);
-    try {
-      await mongoose.connect(MONGO_LOCAL_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      console.log("DB mongo conectada");
-    } catch (error) {
-      console.log(`Error en conexión de Base de datos: ${error}`);
-    }
   });
 }

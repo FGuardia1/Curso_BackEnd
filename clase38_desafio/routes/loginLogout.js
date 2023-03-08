@@ -3,6 +3,7 @@ const { Router } = express;
 const routerLog = Router();
 const passport = require("passport");
 const loginControllers = require("../controller/operaciones_logIn_logOut_register.js");
+
 routerLog.get("/", loginControllers.aLogIn);
 
 routerLog.get("/login", loginControllers.mostrarLogIn);

@@ -55,7 +55,7 @@ async function agregarProducto(e) {
 
     idCart = await idCart.json();
 
-    let cartUpdated = await fetch("/api/carrito/" + idCart + "/productos", {
+    let cartUpdated = await fetch("/api/carrito/" + idCart.id + "/productos", {
       body: JSON.stringify({ idProd: idProd }),
       headers: {
         "Content-Type": "application/json",

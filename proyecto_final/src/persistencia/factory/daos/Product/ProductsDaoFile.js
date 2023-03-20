@@ -1,5 +1,4 @@
 import fs from "fs";
-import { asDto } from "../../dtos/ProductDTO.js";
 
 export default class ProductsDaoFile {
   constructor(ruta) {
@@ -35,26 +34,34 @@ export default class ProductsDaoFile {
 
   async getAll() {
     await this.#leerArchivo();
-    return asDto(this.productos);
+    return this.productos;
   }
 
   async getById(idBuscado) {
     await this.#leerArchivo();
-    return asDto(this.productos[this.#getIndex(idBuscado)]);
+    return this.productos[this.#getIndex(idBuscado)];
   }
 
-  async save(newProd) {
+  async getBySearch(filter) {
+    await this.#leerArchivo();
+    let campo = Object.keys(filter)[0];
+    let valor = Object.values(filter)[0];
+    let find = this.productos.find((prod) => prod[campo] == valor);
+    return find;
+  }
+
+  async create(newProd) {
     await this.#leerArchivo();
     this.productos.push(newProd);
     await this.#escribirArchivo();
-    return asDto(newProd);
+    return newProd;
   }
 
-  async deleteById(idParaBorrar) {
+  async delete(idParaBorrar) {
     await this.#leerArchivo();
     const [borrada] = this.productos.splice(this.#getIndex(idParaBorrar), 1);
     await this.#escribirArchivo();
-    return asDto(borrada);
+    return borrada;
   }
 
   async deleteAll() {
@@ -62,12 +69,12 @@ export default class ProductsDaoFile {
     await this.#escribirArchivo();
   }
 
-  async updateById(idParaReemplazar, newProduct) {
+  async modify(idParaReemplazar, newProduct) {
     await this.#leerArchivo();
     const index = this.#getIndex(idParaReemplazar);
     const actualizada = { ...this.productos[index], ...newProduct };
     this.productos.splice(index, 1, actualizada);
     await this.#escribirArchivo();
-    return asDto(actualizada);
+    return actualizada;
   }
 }

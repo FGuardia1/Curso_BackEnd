@@ -3,7 +3,7 @@ const routerCart = express.Router();
 import {
   getListProducts,
   addProdToCart,
-  getCartIdByUser,
+  getCartByUser,
   deleteCart,
   createCart,
   removeProduct,
@@ -12,7 +12,7 @@ import {
 
 routerCart.get("/:id/productos", getListProducts);
 
-routerCart.get("/", getCartIdByUser);
+routerCart.get("/", getCartByUser);
 
 routerCart.delete("/:id", deleteCart);
 

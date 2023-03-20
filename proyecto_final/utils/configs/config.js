@@ -18,4 +18,5 @@ export const twilioConfig = {
 export const proyectConfig = {
   URL_MONGO_ATLAS: env.URL_MONGO_ATLAS,
   PORT: env.PORT,
+  PERSISTENCIA: env.PERSISTENCIA,
 };

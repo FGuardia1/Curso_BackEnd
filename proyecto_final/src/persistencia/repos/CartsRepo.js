@@ -24,12 +24,12 @@ export default class CartsRepo {
 
   async getBySearch(filter) {
     const dto = await this.#dao.getBySearch(filter);
-
-    return new Cart(dto);
+    if (dto) return new Cart(dto);
+    else return null;
   }
 
-  async add(cartNew) {
-    let newElement = await this.#dao.save(asDto(cartNew));
+  async create(cartNew) {
+    let newElement = await this.#dao.create(asDto(cartNew));
   }
 
   async removeById(idBuscado) {

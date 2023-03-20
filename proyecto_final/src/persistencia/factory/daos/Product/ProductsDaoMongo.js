@@ -11,7 +11,7 @@ export default class ProductsDaoMongo {
 
   async init() {
     await mongoose.connect(DB_URL);
-    logger.info("conectado");
+    logger.info("conectado por mongo");
   }
 
   async create(data) {

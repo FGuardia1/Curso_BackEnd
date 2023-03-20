@@ -1,10 +1,11 @@
 import ProductsDaoFile from "./ProductsDaoFile.js";
 import ProductsDaoMongo from "./ProductsDaoMongo.js";
 import productos from "../../../../../utils/models/productos.js";
+import { proyectConfig } from "../../../../../utils/configs/config.js";
 
-const OPCION_DAO = "Mongo";
+const OPCION_DAO = proyectConfig.PERSISTENCIA;
 
-const rutaArchivoProds = "./products.txt";
+const rutaArchivoProds = "./src/persistencia/DBs/productos.txt";
 
 let dao;
 switch (OPCION_DAO) {

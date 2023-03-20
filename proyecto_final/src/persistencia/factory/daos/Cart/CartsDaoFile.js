@@ -1,10 +1,10 @@
 import fs from "fs";
-import { asDto } from "../../dtos/MsgDTO.js";
+import { v4 as uuidv4 } from "uuid";
 
-export default class MsjsDaoFile {
+export default class CartsDaoFile {
   constructor(ruta) {
     this.ruta = ruta;
-    this.msjs = [];
+    this.carts = [];
   }
 
   async init() {
@@ -19,55 +19,68 @@ export default class MsjsDaoFile {
     console.log("productos dao en archivo -> cerrado");
   }
 
+  getRandomId() {
+    return uuidv4();
+  }
+
   async #leerArchivo() {
     const texto = await fs.promises.readFile(this.ruta, "utf-8");
-    this.msjs = JSON.parse(texto);
+    this.carts = JSON.parse(texto);
   }
 
   async #escribirArchivo() {
-    const texto = JSON.stringify(this.msjs, null, 2);
+    const texto = JSON.stringify(this.carts, null, 2);
     await fs.promises.writeFile(this.ruta, texto);
   }
 
   #getIndex(id) {
-    return this.msjs.findIndex((msjs) => msjs.id === id);
+    return this.carts.findIndex((carts) => carts.id == id);
   }
 
   async getAll() {
     await this.#leerArchivo();
-    return asDto(this.msjs);
+    return this.carts;
   }
 
   async getById(idBuscado) {
     await this.#leerArchivo();
-    return asDto(this.msjs[this.#getIndex(idBuscado)]);
+    return this.carts[this.#getIndex(idBuscado)];
   }
 
-  async save(newMsjs) {
+  async getBySearch(filter) {
     await this.#leerArchivo();
-    this.msjs.push(newMsjs);
-    await this.#escribirArchivo();
-    return asDto(newMsjs);
+    let campo = Object.keys(filter)[0];
+    let valor = Object.values(filter)[0];
+    let find = this.carts.find((prod) => prod[campo] == valor);
+    return find;
   }
 
-  async deleteById(idParaBorrar) {
+  async create(newCart) {
     await this.#leerArchivo();
-    const [borrada] = this.msjs.splice(this.#getIndex(idParaBorrar), 1);
+    newCart.id = this.getRandomId();
+    this.carts.push(newCart);
     await this.#escribirArchivo();
-    return asDto(borrada);
+    return newCart;
+  }
+
+  async delete(idParaBorrar) {
+    await this.#leerArchivo();
+    const [borrada] = this.carts.splice(this.#getIndex(idParaBorrar), 1);
+    await this.#escribirArchivo();
+    return borrada;
   }
 
   async deleteAll() {
-    this.msjs = [];
+    this.carts = [];
     await this.#escribirArchivo();
   }
 
-  async updateById(idParaReemplazar, newMsj) {
+  async modify(idParaReemplazar, newProduct) {
     await this.#leerArchivo();
     const index = this.#getIndex(idParaReemplazar);
-    const actualizada = { ...this.msjs[index], ...newMsj };
-    this.msjs.splice(index, 1, actualizada);
+    const actualizada = { ...this.carts[index], ...newProduct };
+    this.carts.splice(index, 1, actualizada);
     await this.#escribirArchivo();
-    return asDto(actualizada);
+    return actualizada;
   }
 }

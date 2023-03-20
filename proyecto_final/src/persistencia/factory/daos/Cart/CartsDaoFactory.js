@@ -1,13 +1,14 @@
 import CartsDaoMongo from "./CartsDaoMongo.js";
-
-const rutaArchivoProds = "./msjs.txt";
+import CartsDaoFile from "./CartsDaoFile.js";
+const rutaArchivoCarts = "./src/persistencia/DBs/carritos.txt";
 import carritos from "../../../../../utils/models/carritos.js";
-const OPCION_DAO = "Mongo";
+import { proyectConfig } from "../../../../../utils/configs/config.js";
+const OPCION_DAO = proyectConfig.PERSISTENCIA;
 
 let dao;
 switch (OPCION_DAO) {
   case "File":
-    dao = "new MsjsDaoFile(rutaArchivoProds);";
+    dao = new CartsDaoFile(rutaArchivoCarts);
     await dao.init();
     break;
   case "Mongo":

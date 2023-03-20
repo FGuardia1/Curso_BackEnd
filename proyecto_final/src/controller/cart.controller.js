@@ -1,4 +1,3 @@
-import { productosDAO, carritoDAO } from "../daos/index.js";
 import logger from "../../utils/logger.js";
 
 import ProductosRepo from "../persistencia/repos/ProductsRepo.js";
@@ -16,12 +15,13 @@ const getListProducts = async (req, res) => {
   }
 };
 
-const getCartIdByUser = async (req, res) => {
+const getCartByUser = async (req, res) => {
   try {
     let cart = await cartsRepo.getBySearch({
       userId: req.session.passport.user,
     });
-    res.send(cart.id);
+
+    res.send(cart);
   } catch (error) {
     logger.error(error.message);
   }
@@ -95,7 +95,7 @@ const clearCart = async (req, res) => {
 export {
   getListProducts,
   addProdToCart,
-  getCartIdByUser,
+  getCartByUser,
   deleteCart,
   createCart,
   removeProduct,

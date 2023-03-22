@@ -3,6 +3,7 @@ export default class Producto {
     nombre,
     timestamp,
     descripcion,
+    categoria,
     codigo,
     precio,
     stock,
@@ -17,6 +18,7 @@ export default class Producto {
       (this.precio = precio),
       (this.stock = stock),
       (this.foto = foto);
+    this.categoria = categoria;
     this.id = _id || id;
   }
 }

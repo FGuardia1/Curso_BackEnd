@@ -22,6 +22,11 @@ export default class ProductosRepo {
     return new Producto(dto);
   }
 
+  async getBySearch(search) {
+    const products = await this.#dao.getBySearch(search);
+    return products.map((p) => new Producto(p));
+  }
+
   async add(prodNew) {
     let agregado = await this.#dao.create(asDto(prodNew));
     return new Producto(agregado);

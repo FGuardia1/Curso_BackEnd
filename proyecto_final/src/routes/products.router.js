@@ -6,10 +6,11 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
+  getCategory,
 } from "../controller/product.controller.js";
 
 routerProduct.get("/:id?", getProducts);
-
+routerProduct.get("/c/:categoria", getCategory);
 routerProduct.post("/", addProduct);
 
 routerProduct.put("/:id", updateProduct);

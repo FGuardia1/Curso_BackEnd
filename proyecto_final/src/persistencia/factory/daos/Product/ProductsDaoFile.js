@@ -1,5 +1,5 @@
 import fs from "fs";
-
+import { v4 as uuidv4 } from "uuid";
 export default class ProductsDaoFile {
   constructor(ruta) {
     this.ruta = ruta;
@@ -17,7 +17,9 @@ export default class ProductsDaoFile {
   disconnect() {
     console.log("productos dao en archivo -> cerrado");
   }
-
+  getRandomId() {
+    return uuidv4();
+  }
   async #leerArchivo() {
     const texto = await fs.promises.readFile(this.ruta, "utf-8");
     this.productos = JSON.parse(texto);
@@ -52,6 +54,7 @@ export default class ProductsDaoFile {
 
   async create(newProd) {
     await this.#leerArchivo();
+    newProd.id = this.getRandomId();
     this.productos.push(newProd);
     await this.#escribirArchivo();
     return newProd;

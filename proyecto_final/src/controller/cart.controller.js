@@ -6,90 +6,62 @@ const prodsRepo = ProductosRepo.getInstancia();
 import CartsRepo from "../persistencia/repos/CartsRepo.js";
 const cartsRepo = CartsRepo.getInstancia();
 
+import {
+  obtenerListadoCarrito,
+  buscarCarritoXuser,
+  eliminarCarrito,
+  crearCarrito,
+  agregarProdAcarrito,
+  quitarProdCarrito,
+  vaciarCarrito,
+} from "../negocio/carritos.business.js";
+
 const getListProducts = async (req, res) => {
-  try {
-    let cart = await cartsRepo.getById(req.params.id);
-    res.send(cart.productos);
-  } catch (error) {
-    logger.error(error.message);
-  }
+  let productos = await obtenerListadoCarrito(req.params.id);
+  res.send(productos);
 };
 
 const getCartByUser = async (req, res) => {
-  try {
-    let cart = await cartsRepo.getBySearch({
-      userId: req.session.passport.user,
-    });
+  let userId = req.session.passport.user;
+  let idCart = await buscarCarritoXuser(userId);
 
-    res.send(cart);
-  } catch (error) {
-    logger.error(error.message);
-  }
+  res.send({ id: idCart.id });
 };
 
 const deleteCart = (req, res) => {
   const id = req.params.id;
 
-  try {
-    cartsRepo.removeById(id);
-    res.status(200).send("Carrito eliminado");
-  } catch (error) {
-    logger.error(error.message);
-  }
+  eliminarCarrito(id);
+  res.status(200).send("Carrito eliminado");
 };
 
 const createCart = async (req, res) => {
   let userId = req.session.passport.user;
 
-  let timestamp = new Date().toLocaleString();
-  let productos = [];
-
-  try {
-    let newCartId = await cartsRepo.add({ timestamp, productos, userId });
-    res.send({ id: newCartId });
-  } catch (error) {
-    logger.error(error.message);
-  }
+  let newCartId = await crearCarrito(userId);
+  res.send({ id: newCartId });
 };
 
 const addProdToCart = async (req, res) => {
   const idCart = req.params.id;
   let { idProd } = req.body;
 
-  try {
-    let carrito = await cartsRepo.getById(idCart);
-    let producto = await prodsRepo.getById(idProd);
-    carrito.productos.push(producto);
-    cartsRepo.modify(idCart, carrito);
-    res.status(200).send(carrito.productos);
-  } catch (error) {
-    logger.error(error.message);
-  }
+  let newList = await agregarProdAcarrito(idCart, idProd);
+
+  res.status(200).send(newList);
 };
 
 const removeProduct = async (req, res) => {
   const idCart = req.params.id;
   const idProd = req.params.id_prod;
-  try {
-    let carrito = await cartsRepo.getById(idCart);
-    carrito.productos = carrito.productos.filter((el) => el.id != idProd);
-    cartsRepo.modify(idCart, carrito);
-    res.status(200).send("Producto eliminado de carrito");
-  } catch (error) {
-    logger.error(error.message);
-  }
+  quitarProdCarrito(idCart, idProd);
+  res.status(200).send("Producto eliminado de carrito");
 };
 
 const clearCart = async (req, res) => {
   const idCart = req.params.id;
-  try {
-    let carrito = await cartsRepo.getById(idCart);
-    carrito.productos = [];
-    cartsRepo.modify(idCart, carrito);
-    res.status(200).send("Carrito vaciado");
-  } catch (error) {
-    logger.error(error.message);
-  }
+  vaciarCarrito(idCart);
+  res.status(200).send("Carrito vaciado");
 };
 
 export {

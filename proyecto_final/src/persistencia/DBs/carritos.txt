@@ -2,28 +2,7 @@
   {
     "timestamp": "20/3/2023 02:34:23",
     "userId": "63e09be5ae5f0f4effac309f",
-    "productos": [
-      {
-        "nombre": "calculadora",
-        "timestamp": "1/11/2022 17:25:44",
-        "descripcion": "Camculadora marca Casio",
-        "codigo": "P2",
-        "precio": 235,
-        "stock": 25,
-        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-        "id": "637da7e6d705f35d7130f938"
-      },
-      {
-        "nombre": "Mochila",
-        "timestamp": "1/11/2022 17:25:44",
-        "descripcion": "Mochila marca adidas",
-        "codigo": "P3",
-        "precio": 3500,
-        "stock": 15,
-        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-512.png",
-        "id": "637daaeb4097d4c1863af32b"
-      }
-    ],
+    "productos": [],
     "id": "23d0a632-c1c3-4109-93f5-910c010d0425"
   }
 ]

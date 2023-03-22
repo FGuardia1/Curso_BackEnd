@@ -24,7 +24,7 @@ export default class ProductsDaoMongo {
   }
 
   async getBySearch(filter) {
-    return await this.collection.findOne(filter).lean();
+    return await this.collection.find(filter).lean();
   }
   async getAll() {
     return await this.collection.find().lean();

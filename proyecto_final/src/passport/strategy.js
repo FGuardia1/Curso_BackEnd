@@ -30,6 +30,11 @@ const login = (req, username, password, cb) => {
 
 const register = (req, username, password, cb) => {
   const file = req.file;
+  let passConf = req.body.passwordConf;
+  if (password != passConf) {
+    return cb(null, false);
+  }
+
   User.findOne({ email: username }, function (err, user) {
     if (err) {
       logger.info("Error in SignUp: " + err.message);

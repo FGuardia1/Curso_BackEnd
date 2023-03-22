@@ -1,5 +1,14 @@
 export class ProductDto {
-  constructor({ nombre, timestamp, descripcion, codigo, precio, stock, foto }) {
+  constructor({
+    nombre,
+    timestamp,
+    descripcion,
+    codigo,
+    precio,
+    stock,
+    foto,
+    categoria,
+  }) {
     (this.nombre = nombre),
       (this.timestamp = timestamp),
       (this.descripcion = descripcion),
@@ -7,6 +16,7 @@ export class ProductDto {
       (this.precio = precio),
       (this.stock = stock),
       (this.foto = foto);
+    this.categoria = categoria;
   }
 }
 export function asDto(prods) {

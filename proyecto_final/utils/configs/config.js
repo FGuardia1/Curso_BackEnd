@@ -1,13 +1,33 @@
 import { config } from "dotenv";
 config();
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+const NODE_ENV = process.env.NODE_ENV;
+let configDotenv;
+
+if (NODE_ENV == "DEV") {
+  configDotenv = { path: path.join(__dirname, "..", "..", "development.env") };
+} else {
+  configDotenv = {
+    path: path.resolve(__dirname, "..", "..", "production.env"),
+  };
+}
+configDotenv.override = true;
+config(configDotenv);
 const env = process.env;
-export const emailConfig = {
+
+const emailConfig = {
   name: "Fernando",
   user: env.GMAIL_USER,
   password: env.GMAIL_PASS,
 };
 
-export const twilioConfig = {
+const twilioConfig = {
   auth: env.TWILIO_AUTH,
   pass: env.TWILIO_PASS,
   cel: env.TWILIO_CEL,
@@ -15,8 +35,10 @@ export const twilioConfig = {
   celwsp: env.TWILIO_CEL_WSP,
 };
 
-export const proyectConfig = {
+const proyectConfig = {
   URL_MONGO_ATLAS: env.URL_MONGO_ATLAS,
   PORT: env.PORT,
   PERSISTENCIA: env.PERSISTENCIA,
 };
+
+export { emailConfig, twilioConfig, proyectConfig };

@@ -1,39 +1,4 @@
 
-{"level":"error","message":"Cannot destructure property 'nombre' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'nombre' of 'undefined' as it is undefined."}
-{"level":"error"}
 {"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"cartsRepo.create is not a function"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"this[#dao].save is not a function"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot read properties of null (reading 'productos')"}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
-{"level":"error","message":"Cannot destructure property 'timestamp' of 'undefined' as it is undefined."}
+{"level":"error","message":"Callback must be a function, got true"}
+{"level":"error","message":"Cast to ObjectId failed for value \"Calculadora\" (type string) at path \"_id\" for model \"productos\""}

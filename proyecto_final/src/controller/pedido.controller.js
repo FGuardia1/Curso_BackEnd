@@ -4,17 +4,9 @@ import { enviarMailPedido } from "../services/sendEmail.js";
 import { sendmsj, sendwsp } from "../services/sendToPhone.js";
 import logger from "../../utils/logger.js";
 
+import { crearPedido } from "../negocio/pedidos.busines.js";
 export const createPedido = async (req, res) => {
   const { _id: idUser, name, email, telephone } = req.user;
-  try {
-    let cart = await cartsRepo.getBySearch({
-      userId: idUser,
-    });
-
-    // enviarMailPedido({ name, email, lista: cart.productos });
-    //  sendmsj(telephone);
-    // sendwsp({ name, email });
-  } catch (error) {
-    logger.error(error.message);
-  }
+  crearPedido({ idUser, name, email, telephone });
+  res.status(200);
 };

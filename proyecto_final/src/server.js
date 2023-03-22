@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(dirname, "public")));
 
-app.use(express.static(path.join(dirname, "../", "public")));
 import exphbs from "express-handlebars";
 
 app.set("view engine", "handlebars");
@@ -89,10 +88,6 @@ app.use("/api/carrito", routerCart);
 app.use("/login", routerLogin);
 app.use("/api/pedido", routerPedido);
 app.use("/", routerViews);
-
-app.get("/js/main.js", function (req, res) {
-  res.sendFile(path.join(dirname, "js", "main.js"));
-});
 
 app.use("*", (req, res) => {
   res.send("Pagina no encontrada");

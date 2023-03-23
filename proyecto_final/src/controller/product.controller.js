@@ -13,7 +13,10 @@ import {
 } from "../negocio/productos.business.js";
 
 const getProducts = async (req, res) => {
-  res.send(await obtenerProductos(req.params.id));
+  let resp = await obtenerProductos(req.params.id);
+
+  if (resp) res.status(200).send(resp);
+  else res.status(502).send({ Mensaje: "No encontrado" });
 };
 
 const getCategory = async (req, res) => {

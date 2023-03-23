@@ -20,11 +20,17 @@ export const comprobarCarrito = async (userId) => {
   }
 };
 
-export const crearCarritoRegistro = async (userId, datosEmail) => {
+export const crearCarritoRegistro = async (userEmail, address, datosEmail) => {
   let timestamp = new Date().toLocaleString();
-  let productos = [];
+  let items = [];
+
   try {
-    let newCartId = await cartsRepo.create({ timestamp, productos, userId });
+    let newCartId = await cartsRepo.create({
+      timestamp,
+      direccion: address,
+      items,
+      email: userEmail,
+    });
     // enviarMailRegistro(datosEmail);
   } catch (error) {
     logger.error(error);

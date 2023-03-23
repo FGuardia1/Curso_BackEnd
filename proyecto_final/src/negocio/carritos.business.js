@@ -9,16 +9,16 @@ const cartsRepo = CartsRepo.getInstancia();
 export const obtenerListadoCarrito = async (id) => {
   try {
     let cart = await cartsRepo.getById(id);
-    return cart.productos;
+    return cart.items;
   } catch (error) {
     logger.error(error.message);
   }
 };
 
-export const buscarCarritoXuser = async (userId) => {
+export const buscarCarritoXuser = async (email) => {
   try {
     let cart = await cartsRepo.getBySearch({
-      userId: userId,
+      email,
     });
 
     return cart;
@@ -35,12 +35,17 @@ export const eliminarCarrito = (id) => {
   }
 };
 
-export const crearCarrito = async (userId) => {
+export const crearCarrito = async (userEmail, direccionUser) => {
   let timestamp = new Date().toLocaleString();
-  let productos = [];
+  let items = [];
 
   try {
-    let newCartId = await cartsRepo.add({ timestamp, productos, userId });
+    let newCartId = await cartsRepo.add({
+      timestamp,
+      productos: items,
+      email: userEmail,
+      direccion: direccionUser,
+    });
     return newCartId;
   } catch (error) {
     logger.error(error.message);
@@ -51,9 +56,12 @@ export const agregarProdAcarrito = async (idCart, idProd) => {
   try {
     let carrito = await cartsRepo.getById(idCart);
     let producto = await prodsRepo.getById(idProd);
-    carrito.productos.push(producto);
+    let { nombre, precio, foto } = producto;
+    let id = producto._id || producto.id;
+    let cantidad = 1;
+    carrito.items.push({ id, nombre, precio, cantidad, foto });
     cartsRepo.modify(idCart, carrito);
-    return carrito.productos;
+    return carrito.items;
   } catch (error) {
     logger.error(error.message);
   }
@@ -72,7 +80,7 @@ export const quitarProdCarrito = async (idCart, idProd) => {
 export const vaciarCarrito = async (idCart) => {
   try {
     let carrito = await cartsRepo.getById(idCart);
-    carrito.productos = [];
+    carrito.items = [];
     cartsRepo.modify(idCart, carrito);
   } catch (error) {
     logger.error(error.message);

@@ -1,7 +1,7 @@
 <div>
 {{>navbar}}
   <h1>Productos</h1>
-<image src="C:\Users\WilllianWin10\Desktop\Backend\clase6\desafio\proyecto_final\public\avatars\1675808878916_cara.JPG"></image>
+
   <div
     class="card-group mx-auto text-decoration-none d-flex flex-wrap justify-content-center"
     id="products-container"
@@ -33,10 +33,10 @@
   <table class="table table-dark">
     <thead>
       <tr>
-
         <th scope="col">Foto</th>
         <th scope="col">Producto</th>
         <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
       </tr>
     </thead>
     <tbody id="tablaCarrito">
@@ -51,7 +51,7 @@
 /></td>
   <td>{{this.nombre}}</td>
   <td>${{this.precio}}</td>
-  
+  <td>{{this.cantidad}}</td>
 </tr> 
 
     {{/each}}

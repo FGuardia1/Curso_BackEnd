@@ -22,10 +22,10 @@ const getListProducts = async (req, res) => {
 };
 
 const getCartByUser = async (req, res) => {
-  let userId = req.session.passport.user;
-  let idCart = await buscarCarritoXuser(userId);
+  let email = req.user.email;
+  let cart = await buscarCarritoXuser(email);
 
-  res.send({ id: idCart.id });
+  res.send({ id: cart.id });
 };
 
 const deleteCart = (req, res) => {
@@ -36,9 +36,9 @@ const deleteCart = (req, res) => {
 };
 
 const createCart = async (req, res) => {
-  let userId = req.session.passport.user;
-
-  let newCartId = await crearCarrito(userId);
+  let userEmail = req.session.passport.user;
+  console.log(req);
+  //let newCartId = await crearCarrito(userEmail);
   res.send({ id: newCartId });
 };
 

@@ -3,7 +3,7 @@ import { proyectConfig } from "../../../../../utils/configs/config.js";
 const DB_URL = proyectConfig.URL_MONGO_ATLAS + "&dbName=ecommerceBackend";
 
 import logger from "../../../../../utils/logger.js";
-export default class CartsDaoMongo {
+export default class OrdenesDaoMongo {
   constructor(collection) {
     this.collection = collection;
   }

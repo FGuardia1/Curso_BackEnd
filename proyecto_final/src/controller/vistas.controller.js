@@ -15,7 +15,7 @@ export const renderHome = async (req, res) => {
     let cart = await cartsRepo.getBySearch({
       userId: _id,
     });
-    let listaCarrito = cart.productos;
+    let listaCarrito = cart.items;
 
     res.render("products", { products, name, listaCarrito, avatar_path });
   } catch (error) {

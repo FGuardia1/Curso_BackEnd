@@ -1,8 +1,9 @@
 export class CartDto {
-  constructor({ timestamp, userId, productos }) {
+  constructor({ timestamp, email, items, direccion }) {
     this.timestamp = timestamp;
-    this.userId = userId;
-    this.productos = productos;
+    this.email = email;
+    this.items = items;
+    this.direccion = direccion;
   }
 }
 export function asDto(cart) {

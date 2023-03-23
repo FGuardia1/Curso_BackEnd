@@ -14,12 +14,14 @@ export default class ProductosRepo {
 
   async getAll() {
     const products = await this.#dao.getAll();
-    return products.map((p) => new Producto(p));
+    if (products) return products.map((p) => new Producto(p));
+    return null;
   }
 
   async getById(idBuscado) {
     const dto = await this.#dao.getById(idBuscado);
-    return new Producto(dto);
+    if (dto) return new Producto(dto);
+    return null;
   }
 
   async getBySearch(search) {

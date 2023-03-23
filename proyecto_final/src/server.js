@@ -3,7 +3,7 @@ import routerProduct from "./routes/products.router.js";
 import routerCart from "./routes/cart.router.js";
 import routerLogin from "./routes/loginLogout.router.js";
 import routerViews from "./routes/vistas.router.js";
-import routerPedido from "./routes/pedido.router.js";
+import routerOrden from "./routes/orden.router.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -86,7 +86,7 @@ passport.deserializeUser((id, done) => {
 app.use("/api/productos", routerProduct);
 app.use("/api/carrito", routerCart);
 app.use("/login", routerLogin);
-app.use("/api/pedido", routerPedido);
+app.use("/api/pedido", routerOrden);
 app.use("/", routerViews);
 
 app.use("*", (req, res) => {

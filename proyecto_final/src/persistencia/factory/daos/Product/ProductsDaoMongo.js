@@ -20,7 +20,11 @@ export default class ProductsDaoMongo {
   }
 
   async getById(id) {
-    return await this.collection.findOne({ _id: id });
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      return await this.collection.findOne({ _id: id });
+    } else {
+      return null;
+    }
   }
 
   async getBySearch(filter) {

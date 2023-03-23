@@ -1,8 +1,9 @@
 export default class Cart {
-  constructor({ timestamp, userId, productos, _id, id }) {
+  constructor({ timestamp, email, items, _id, id, direccion }) {
     this.timestamp = timestamp;
-    this.userId = userId;
-    this.productos = productos;
+    this.email = email;
+    this.items = items;
     this.id = _id || id;
+    this.direccion = direccion;
   }
 }

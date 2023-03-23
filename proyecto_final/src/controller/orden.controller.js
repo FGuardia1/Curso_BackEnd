@@ -4,9 +4,9 @@ import { enviarMailPedido } from "../services/sendEmail.js";
 import { sendmsj, sendwsp } from "../services/sendToPhone.js";
 import logger from "../../utils/logger.js";
 
-import { crearPedido } from "../negocio/pedidos.busines.js";
-export const createPedido = async (req, res) => {
-  const { _id: idUser, name, email, telephone } = req.user;
-  crearPedido({ idUser, name, email, telephone });
+import { crearOrden } from "../negocio/orden.business.js";
+export const createOrden = async (req, res) => {
+  const { name, email, telephone } = req.user;
+  crearOrden({ name, email, telephone });
   res.status(200);
 };

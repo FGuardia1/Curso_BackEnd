@@ -23,6 +23,8 @@ function crearPedido() {
     },
     method: "POST",
   });
+
+  carritoTabla.innerHTML = "";
 }
 
 function cerrarSesion() {
@@ -87,7 +89,7 @@ function actualicarCarrito(carrito) {
   });
 }
 
-function obtenerHtmlfilaTabla({ foto, nombre, precio }) {
+function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad }) {
   return `      
   <td><img
   class="card-img-top img-fluid"
@@ -97,6 +99,6 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio }) {
 /></td>
   <td>${nombre}</td>
   <td>$${precio}</td>
-  
+  <td>${cantidad}</td>
 `;
 }

@@ -27,9 +27,11 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  let userId = req.session.passport.user;
+  let emailUser = req.user.email;
+  let address = req.user.address;
   let datosEmail = req.body;
-  crearCarritoRegistro(userId, datosEmail);
+
+  crearCarritoRegistro(emailUser, address, datosEmail);
 
   res.redirect("/home");
 };

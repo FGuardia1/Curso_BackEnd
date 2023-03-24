@@ -17,19 +17,24 @@ import { proyectConfig, twilioConfig } from "../utils/configs/config.js";
 import logger from "../utils/logger.js";
 import { cpus } from "os";
 import cluster from "cluster";
+import { Server as HttpServer } from "http";
+import { Server as IOServer } from "socket.io";
+import { chatService } from "./chat_sockets/sockets.js";
+import exphbs from "express-handlebars";
 let cantCpus = cpus().length;
 
 const MODO = proyectConfig.MODO;
 
 const app = express();
+const httpServer = new HttpServer(app);
+const socketIo = new IOServer(httpServer);
+chatService(socketIo);
 const PORT = proyectConfig.PORT || 3000;
 const dirname = `${process.cwd()}`;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(dirname, "public")));
-
-import exphbs from "express-handlebars";
 
 app.set("view engine", "handlebars");
 
@@ -99,7 +104,7 @@ if (MODO == "CLUSTER") {
       cluster.fork();
     }
   } else {
-    const server = app.listen(PORT, async () => {
+    httpServer.listen(PORT, async () => {
       logger.info(`Servidor corriendo en puerto: ${PORT}`);
       try {
         await mongoose.connect(
@@ -114,10 +119,10 @@ if (MODO == "CLUSTER") {
         logger.error(`Error en conexión de Base de datos: ${error}`);
       }
     });
-    server.on("error", (err) => logger.error(err));
+    httpServer.on("error", (err) => logger.error(err));
   }
 } else {
-  const server = app.listen(PORT, async () => {
+  httpServer.listen(PORT, async () => {
     logger.info(`Servidor corriendo en puerto: ${PORT}`);
     try {
       await mongoose.connect(
@@ -132,5 +137,5 @@ if (MODO == "CLUSTER") {
       logger.error(`Error en conexión de Base de datos: ${error}`);
     }
   });
-  server.on("error", (err) => logger.error(err));
+  httpServer.on("error", (err) => logger.error(err));
 }

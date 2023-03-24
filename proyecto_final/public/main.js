@@ -1,3 +1,5 @@
+const socket = io.connect();
+let chatEmail = document.getElementById("emailUser").innerText;
 let seccionMuestrarioProd = document.getElementById("products-container");
 let btnCerrarSesion = document.getElementById("btn_cerrar_sesion");
 let carritoTabla = document.getElementById("tablaCarrito");
@@ -102,3 +104,28 @@ function obtenerHtmlfilaTabla({ foto, nombre, precio, cantidad }) {
   <td>${cantidad}</td>
 `;
 }
+
+const addMessage = (e) => {
+  const message = {
+    email: chatEmail,
+    tipo: "usuario",
+    date: new Date().toLocaleString(),
+    mensaje: document.querySelector("#chatMensaje").value,
+  };
+
+  socket.emit("new-message", message);
+  return false;
+};
+
+socket.on("message-push", (data) => {
+  renderMessageAdd(data);
+});
+
+const renderMessageAdd = ({ email, mensaje, date }) => {
+  const html = `
+  <strong class="text-primary">${email}</strong><span style="color:brown">[${date}]</span>:
+  <i style="color:green">${mensaje}</i>`;
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  document.querySelector("#messages").append(div);
+};

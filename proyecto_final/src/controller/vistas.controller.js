@@ -7,7 +7,7 @@ const cartsRepo = CartsRepo.getInstancia();
 import logger from "../../utils/logger.js";
 
 export const renderHome = async (req, res) => {
-  const { name, avatar_path, _id } = req.user;
+  const { name, avatar_path, _id, email } = req.user;
 
   try {
     const products = await prodsRepo.getAll();
@@ -17,7 +17,13 @@ export const renderHome = async (req, res) => {
     });
     let listaCarrito = cart.items;
 
-    res.render("products", { products, name, listaCarrito, avatar_path });
+    res.render("products", {
+      products,
+      name,
+      listaCarrito,
+      avatar_path,
+      email,
+    });
   } catch (error) {
     logger.error(error.message);
   }

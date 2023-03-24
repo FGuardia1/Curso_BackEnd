@@ -10,7 +10,7 @@ export default class OrdenesDaoMongo {
 
   async init() {
     await mongoose.connect(DB_URL);
-    logger.info("conectado mongo Cart");
+    logger.info("conectado mongo orden");
   }
 
   async create(data) {
